@@ -1,0 +1,2344 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viking | Specialty Coffee, Eatery & Smart Table Ordering</title>
+  
+  <!-- Meta SEO -->
+  <meta name="description" content="VIKING - Specialty coffee Nusantara, artisan non-coffee, snack & finger food, pastry segar, dan ruang berkumpul yang dilengkapi sistem scan QR pesanan langsung di tiap meja." />
+  <meta name="keywords" content="viking cafe, cafe jember, coffee shop jember, wfc jember, scan meja, qr table order, specialty coffee, pastry, snack jember, tidar jember" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              800: '#92400e',
+              900: '#78350f',
+              950: '#451a03',
+            },
+            coffee: {
+              light: '#fbf8f5',
+              sand: '#f5ede4',
+              cream: '#eaddcf',
+              caramel: '#c48b52',
+              bronze: '#a06b3a',
+              roast: '#4a3224',
+              deep: '#231812',
+              dark: '#160e0a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="bg-viking-canvas text-stone-800 antialiased selection:bg-amber-200 selection:text-amber-950 transition-colors duration-500">
+
+  <!-- LUXURY WELCOME SPLASH SCREEN (ENTRANCE GREETING) -->
+  <div id="welcomeSplash" onclick="if(event.target === this) dismissWelcomeSplash()" class="fixed inset-0 z-[100] flex items-center justify-center bg-[#0d0805]/95 backdrop-blur-md text-white p-4 select-none overflow-hidden cursor-default">
+    <!-- Ambient Golden Glow Lighting -->
+    <div class="absolute -top-32 -left-32 w-80 h-80 rounded-full bg-amber-500/25 blur-[120px] pointer-events-none animate-pulse"></div>
+    <div class="absolute -bottom-32 -right-32 w-80 h-80 rounded-full bg-amber-700/25 blur-[120px] pointer-events-none animate-pulse"></div>
+
+    <!-- Compact, Clean, Luxury Welcome Card -->
+    <div class="relative z-10 max-w-sm sm:max-w-md w-full text-center space-y-5 p-6 sm:p-7 rounded-[2.5rem] bg-gradient-to-b from-[#1c130d] via-[#150d08] to-[#100905] border border-amber-400/40 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_50px_rgba(212,175,55,0.25)] gold-glow transform transition-transform duration-500">
+      
+      <!-- Steaming Artisan Coffee Icon with Ambient Glow -->
+      <div class="relative mx-auto w-20 h-20 flex items-center justify-center">
+        <div class="absolute inset-0 rounded-3xl bg-amber-500/30 blur-lg animate-pulse"></div>
+        <div class="relative w-full h-full rounded-3xl bg-gradient-to-br from-amber-900/60 to-stone-900/90 border border-amber-400/60 flex items-center justify-center text-4xl shadow-inner">
+          <span class="animate-bounce-slow">☕</span>
+        </div>
+        <span class="absolute -top-1.5 -right-1.5 flex h-3.5 w-3.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-80"></span>
+          <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-500 border-2 border-stone-950"></span>
+        </span>
+      </div>
+
+      <!-- Welcome Headings -->
+      <div class="space-y-1.5">
+        <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[11px] font-bold tracking-wider uppercase">
+          <span>✨</span>
+          <span id="welcomeGreetingTimeText">Selamat Datang</span>
+          <span>✨</span>
+        </div>
+
+        <h1 class="font-serif-title text-3xl sm:text-4xl font-extrabold text-white leading-tight">
+          Selamat Datang di <br />
+          <span class="text-gold-gradient italic dynamic-cafe-name">VIKING CAFE</span>
+        </h1>
+
+        <p class="text-stone-300 text-xs sm:text-sm font-normal pt-0.5 max-w-xs mx-auto leading-relaxed">
+          Kopi kurasi, hidangan lezat, dan panggung live music syahdu di Jember.
+        </p>
+      </div>
+
+      <!-- 3 Quick Cafe Highlight Badges (Simpel & Menarik) -->
+      <div class="flex items-center justify-center gap-2 text-[11px] text-amber-200/90 font-semibold pt-1">
+        <span class="bg-white/10 px-3 py-1 rounded-full border border-white/10 shadow-xs">☕ 50+ Menu</span>
+        <span class="bg-white/10 px-3 py-1 rounded-full border border-white/10 shadow-xs">📱 Scan Meja</span>
+        <span class="bg-white/10 px-3 py-1 rounded-full border border-white/10 shadow-xs">🎸 Live Music</span>
+      </div>
+
+      <!-- Action Button & Subtle Progress -->
+      <div class="space-y-3 pt-2">
+        <button 
+          id="btnEnterCafe"
+          onclick="dismissWelcomeSplash()" 
+          class="btn-luxury-gold w-full py-3.5 px-6 rounded-2xl text-stone-950 font-black text-sm shadow-xl flex items-center justify-center gap-2 group cursor-pointer hover:scale-[1.02] active:scale-95 transition-all">
+          <span>Mulai Jelajahi Menu</span>
+          <span class="group-hover:translate-x-1 transition-transform font-sans font-bold">→</span>
+        </button>
+
+        <!-- Subtle Slim Progress Bar -->
+        <div class="space-y-1">
+          <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden">
+            <div id="splashProgressBar" class="h-full bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 rounded-full transition-all duration-75 ease-linear" style="width: 0%;"></div>
+          </div>
+          <div class="flex items-center justify-center gap-2 text-[10px] text-stone-400">
+            <span>Masuk otomatis dalam <strong id="splashTimerText" class="text-amber-300 font-bold">3</strong>s</span>
+            <span>•</span>
+            <span class="cursor-pointer hover:text-amber-300 transition-colors underline" onclick="dismissWelcomeSplash()">Langsung Masuk</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ADMIN MODE FLOATING STRIP (VISIBLE WHEN LOGGED IN AS ADMIN) -->
+  <div id="adminModeBar" class="hidden bg-stone-950 text-amber-300 px-4 py-2.5 text-xs border-b border-amber-500/40 relative z-50 flex items-center justify-between shadow-lg">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+      <span class="font-extrabold uppercase tracking-wider text-amber-300">👑 Mode CMS Admin Aktif</span>
+      <span class="text-stone-400 hidden sm:inline">• Kelola menu, jadwal live music & profil resto secara langsung</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.vikingAdmin.openPortal('dashboard')" class="px-3 py-1 bg-amber-500 hover:bg-amber-400 text-stone-950 rounded-lg font-black text-[11px] cursor-pointer shadow-sm">
+        ⚙️ Buka Panel CMS
+      </button>
+      <button onclick="window.vikingAdmin.logout()" class="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white rounded-lg font-bold text-[11px] cursor-pointer">
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- TOP PROMO & UTILITY BANNER -->
+  <aside id="topAnnouncementBar" aria-label="Pengumuman Promo" class="bg-gradient-to-r from-coffee-dark via-coffee-deep to-coffee-roast text-amber-100 text-xs py-2 px-4 border-b border-white/10">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-center sm:text-left flex-wrap sm:flex-nowrap">
+        <span class="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider border border-amber-400/30">LIVE MUSIC & SCAN-ORDER</span>
+        <span id="announcementText">🎸 <strong>Live Music Setiap Weekend:</strong> Panggung Akustik & Jazz Jumat - Minggu pk 19.30 WIB (Free Entry) • Pesan dari Meja via Scan QR!</span>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] text-amber-200/80 flex-wrap justify-center sm:justify-end">
+        <!-- Background Theme Ambience Switcher -->
+        <div class="inline-flex items-center bg-black/40 rounded-lg p-0.5 border border-white/20" title="Pilih Suasana Warna Latar Belakang (Tema)">
+          <button id="themeBtnWarm" onclick="setVikingTheme('warm')" class="px-2.5 py-0.5 rounded-md bg-amber-500 text-stone-950 font-bold text-[11px] cursor-pointer flex items-center gap-1 shadow-xs" title="Suasana Siang Hangat & Simpel (Warm Cashmere)">
+            <span>☀️</span>
+            <span class="hidden sm:inline">Hangat</span>
+          </button>
+          <button id="themeBtnDark" onclick="setVikingTheme('dark')" class="px-2.5 py-0.5 rounded-md text-stone-300 hover:text-white font-semibold text-[11px] cursor-pointer flex items-center gap-1" title="Suasana Malam Mewah & Akustik (Dark Velvet Lounge)">
+            <span>🌙</span>
+            <span class="hidden sm:inline">Malam</span>
+          </button>
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="inline-flex items-center bg-black/40 rounded-lg p-0.5 border border-white/20">
+          <button id="langBtnId" onclick="window.langManager.setLanguage('id')" class="px-2 py-0.5 rounded-md bg-amber-900 text-white font-bold text-xs cursor-pointer">ID 🇮🇩</button>
+          <button id="langBtnEn" onclick="window.langManager.setLanguage('en')" class="px-2 py-0.5 rounded-md text-stone-300 hover:text-white font-bold text-xs cursor-pointer">EN 🇬🇧</button>
+        </div>
+
+        <span class="hidden md:inline-flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+          <span id="topBarAddressText">Jl. Tidar, Sumbersari, Jember</span>
+        </span>
+        <a href="https://wa.me/6281234567890" target="_blank" class="dynamic-wa-link hover:text-white flex items-center gap-1 transition-colors">
+          <span>WhatsApp Fast Response</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 glass-header transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- LOGO BRAND -->
+        <a href="#beranda" class="flex items-center gap-3 group">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-800 to-coffee-deep text-amber-100 flex items-center justify-center shadow-md shadow-amber-950/20 group-hover:scale-105 transition-transform font-bold font-serif-title text-xl text-amber-300">
+            V
+          </div>
+          <div>
+            <span class="dynamic-cafe-name block font-serif-title font-bold text-xl sm:text-2xl text-coffee-deep tracking-tight leading-none group-hover:text-amber-900 transition-colors">
+              VIKING
+            </span>
+            <span class="dynamic-cafe-tagline block text-[10px] sm:text-[11px] font-semibold text-coffee-caramel tracking-[0.25em] uppercase mt-0.5">
+              Specialty Coffee & Eatery
+            </span>
+          </div>
+        </a>
+
+        <!-- DESKTOP NAVIGATION -->
+        <nav class="hidden xl:flex items-center gap-6 text-sm font-medium text-stone-600">
+          <a href="#beranda" data-i18n="navHome" class="hover:text-amber-900 transition-colors">Beranda</a>
+          <a href="#meja-scan" data-i18n="navTables" class="hover:text-amber-900 transition-colors font-bold text-amber-900 flex items-center gap-1">
+            <span>Meja & Scan QR</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          </a>
+          <a href="#menu" data-i18n="navMenu" class="hover:text-amber-900 transition-colors">Daftar Menu</a>
+          <a href="#live-music" class="hover:text-amber-900 transition-colors font-bold text-amber-800 flex items-center gap-1">
+            <span>🎸 Live Music</span>
+          </a>
+          <a href="#suasana" data-i18n="navFacilities" class="hover:text-amber-900 transition-colors">Fasilitas</a>
+          <a href="#galeri" data-i18n="navGallery" class="hover:text-amber-900 transition-colors">Galeri</a>
+          <a href="#ulasan" data-i18n="navReviews" class="hover:text-amber-900 transition-colors">Ulasan</a>
+          <a href="#reservasi" data-i18n="navReservation" class="hover:text-amber-900 transition-colors">Reservasi</a>
+        </nav>
+
+        <!-- RIGHT ACTIONS & QUICK TABLE BADGE -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- Active Table Selector Pill -->
+          <button 
+            id="activeTableBadge"
+            onclick="openTableSelectorModal()"
+            title="Klik untuk memilih atau mengubah nomor meja Anda"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-amber-100/80 hover:bg-amber-200/80 border border-amber-300/80 text-amber-950 font-bold text-xs transition-colors cursor-pointer shadow-xs">
+            <span class="text-base">🪑</span>
+            <span id="activeTableLabel">Pilih Meja</span>
+            <span class="text-[10px] text-amber-700 bg-white/70 px-1.5 py-0.5 rounded-md">Ubah</span>
+          </button>
+
+          <!-- CMS Admin & Staff Portal Trigger Button -->
+          <button 
+            onclick="window.vikingAdmin.openPortal()"
+            title="Buka CMS Admin & Pengolah Website"
+            class="cms-admin-trigger hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-stone-900 hover:bg-stone-800 text-stone-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-stone-800">
+            <span class="admin-status-indicator w-2 h-2 rounded-full bg-amber-500"></span>
+            <span class="admin-btn-label">CMS Admin</span>
+          </button>
+
+          <!-- Ambient Live Acoustic / Lo-fi Music Button -->
+          <button 
+            id="ambientMusicBtn"
+            title="Klik untuk memutar/mematikan musik live akustik cafe yang menenangkan"
+            class="hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-2xl border border-stone-200/90 text-xs font-semibold text-stone-700 hover:border-amber-400 hover:text-amber-900 transition-all bg-white shadow-xs cursor-pointer">
+            <svg id="musicBtnIcon" class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12 0c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+            <span id="musicBtnText" data-i18n="ambienceSound">🎸 Live Akustik</span>
+            <span id="musicVisualizer" class="flex items-center gap-0.5 h-3 opacity-0 transition-opacity">
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+              <span class="wave-bar"></span>
+            </span>
+          </button>
+
+          <!-- Cart Trigger Button -->
+          <button 
+            class="open-cart-trigger relative p-2.5 rounded-2xl bg-amber-900 text-amber-100 hover:bg-amber-950 active:scale-95 transition-all shadow-md shadow-amber-950/20 cursor-pointer flex items-center justify-center"
+            title="Buka Keranjang Pesanan">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <span class="cart-count-badge hidden absolute -top-1.5 -right-1.5 bg-rose-500 text-white font-bold text-[10px] w-5 h-5 rounded-full items-center justify-center border-2 border-white shadow-sm">
+              0
+            </span>
+          </button>
+
+          <!-- Mobile Hamburger -->
+          <button 
+            id="mobileMenuToggle" 
+            class="xl:hidden p-2 rounded-xl text-stone-700 hover:bg-stone-100 transition-colors cursor-pointer"
+            aria-label="Buka Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end">
+    <div class="w-4/5 max-w-sm bg-white h-full p-6 flex flex-col justify-between shadow-2xl overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-stone-100">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-xl bg-amber-800 text-amber-100 flex items-center justify-center font-bold">V</div>
+            <span class="font-serif-title font-bold text-lg text-coffee-deep">VIKING</span>
+          </div>
+          <button id="closeMobileNav" class="p-2 text-stone-400 hover:text-stone-800" aria-label="Tutup Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <nav class="flex flex-col gap-4 mt-6 text-base font-semibold text-stone-700">
+          <a href="#beranda" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navHome">Beranda</a>
+          <a href="#meja-scan" class="mobile-nav-link text-amber-900 py-1 flex items-center justify-between font-bold" data-i18n="navTables">
+            <span>Meja & Scan QR</span>
+            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Fitur Utama</span>
+          </a>
+          <a href="#menu" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navMenu">Daftar Menu (50+ Produk)</a>
+          <a href="#live-music" class="mobile-nav-link text-amber-800 py-1 flex items-center justify-between font-bold">
+            <span>🎸 Live Music Panggung</span>
+            <span class="text-[10px] bg-amber-500/20 text-amber-900 border border-amber-300 px-2 py-0.5 rounded-full">Jumat - Minggu</span>
+          </a>
+          <a href="#suasana" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navFacilities">Fasilitas & WFC</a>
+          <a href="#galeri" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navGallery">Galeri Foto</a>
+          <a href="#ulasan" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navReviews">Ulasan Pelanggan</a>
+          <a href="#reservasi" class="mobile-nav-link hover:text-amber-800 py-1" data-i18n="navReservation">Reservasi Meja</a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-stone-100 space-y-3">
+        <!-- Mobile Ambience Theme Toggle -->
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-stone-50 border border-stone-200">
+          <span class="text-xs font-bold text-stone-700">🎨 Suasana Latar:</span>
+          <div class="inline-flex bg-white rounded-xl p-0.5 border border-stone-200 shadow-xs">
+            <button onclick="setVikingTheme('warm')" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-500 text-stone-950">☀️ Hangat</button>
+            <button onclick="setVikingTheme('dark')" class="px-2.5 py-1 text-xs font-bold rounded-lg text-stone-600 hover:text-stone-900">🌙 Malam</button>
+          </div>
+        </div>
+
+        <button onclick="window.vikingAdmin.openPortal(); document.getElementById('mobileNavDrawer').classList.add('hidden');" class="cms-admin-trigger w-full bg-stone-900 text-amber-300 font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md border border-amber-500/30">
+          <span class="admin-status-indicator w-2 h-2 rounded-full bg-amber-500"></span>
+          <span class="admin-btn-label">CMS Admin & Pengolah Website</span>
+        </button>
+        <button onclick="openTableSelectorModal(); document.getElementById('mobileNavDrawer').classList.add('hidden');" class="w-full bg-amber-900 text-white font-bold py-3 rounded-2xl text-xs flex items-center justify-center gap-2 shadow-md">
+          <span>🪑 Pilih Nomor Meja Anda</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- HERO SECTION (LUXURY SPECIALTY COFFEE & LIVE ACOUSTIC LOUNGE) -->
+    <section id="beranda" class="relative min-h-[85vh] lg:min-h-[92vh] flex items-center justify-center overflow-hidden py-14 md:py-24">
+      
+      <!-- Ambient Golden Bokeh Lighting -->
+      <div class="absolute -top-32 -right-32 w-[30rem] h-[30rem] rounded-full bg-amber-400/15 blur-[120px] pointer-events-none"></div>
+      <div class="absolute -bottom-32 -left-32 w-[30rem] h-[30rem] rounded-full bg-amber-700/15 blur-[120px] pointer-events-none"></div>
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[20rem] bg-amber-500/5 blur-[140px] pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+          
+          <!-- LEFT CONTENT -->
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            
+            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-900/10 via-amber-800/15 to-amber-700/10 border border-amber-500/30 text-amber-950 text-xs font-bold tracking-wider uppercase shadow-xs">
+              <span class="w-2 h-2 rounded-full bg-amber-600 animate-pulse"></span>
+              <span data-i18n="heroPill">✦ THE VIKING ROASTERY & LIVE ACOUSTIC LOUNGE • EST. JEMBER ✦</span>
+            </div>
+
+            <h1 class="font-serif-title text-4xl sm:text-5xl lg:text-6xl text-coffee-deep font-extrabold tracking-tight leading-[1.12]">
+              <span data-i18n="heroTitle">Kekuatan Cita Rasa Juara, Kehangatan Sejati & </span>
+              <span class="text-gold-gradient italic underline decoration-amber-400/40 decoration-wavy decoration-2" data-i18n="heroTitleHighlight">Kemewahan Ruang.</span>
+            </h1>
+
+            <p class="text-stone-600 text-base sm:text-lg max-w-2xl leading-relaxed mx-auto lg:mx-0 font-normal" data-i18n="heroSubtitle">
+              Menghadirkan harmoni kopi kurasi Nusantara berstandar specialty, artisan non-coffee, pastry segar mentega AOP Prancis, dan aneka sajian gourmet lezat. Dibalut syahdunya panggung live music akhir pekan dan kemudahan pesan langsung dari meja Anda via Scan QR.
+            </p>
+
+            <!-- Luxury Action Buttons -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+              <a 
+                href="#menu" 
+                class="btn-luxury-gold w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl text-sm sm:text-base cursor-pointer">
+                <svg class="w-5 h-5 text-stone-950" fill="currentColor" viewBox="0 0 24 24"><path d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z"/></svg>
+                <span data-i18n="heroCtaMenu">Jelajahi Menu & Harga</span>
+                <span>→</span>
+              </a>
+
+              <a 
+                href="#live-music" 
+                class="btn-luxury-dark w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl text-sm sm:text-base cursor-pointer">
+                <span>🎸</span>
+                <span>Panggung Live Music</span>
+              </a>
+
+              <button 
+                onclick="openTableSelectorModal()"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-50 text-stone-900 font-bold px-6 py-4 rounded-2xl text-sm sm:text-base border border-stone-200 shadow-sm transition-all cursor-pointer">
+                <span>🪑</span>
+                <span data-i18n="heroCtaTable">Pilih Meja</span>
+              </button>
+            </div>
+
+            <!-- Key Feature Highlights with Luxury Polish -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-amber-900/10 text-left">
+              <div class="p-2.5 rounded-2xl bg-white/60 border border-stone-100">
+                <span class="block text-2xl font-black text-coffee-deep font-serif-title">50+ Menu</span>
+                <span class="text-xs text-stone-500 font-medium" data-i18n="statBeans">Kopi, Snack & Meals</span>
+              </div>
+              <div class="p-2.5 rounded-2xl bg-white/60 border border-stone-100">
+                <span class="block text-2xl font-black text-amber-800 font-serif-title">Live Music</span>
+                <span class="text-xs text-stone-500 font-medium">Jumat, Sabtu & Minggu</span>
+              </div>
+              <div class="p-2.5 rounded-2xl bg-white/60 border border-stone-100">
+                <span class="block text-2xl font-black text-coffee-deep font-serif-title">20 Meja</span>
+                <span class="text-xs text-stone-500 font-medium">Equipped QR Order</span>
+              </div>
+              <div class="p-2.5 rounded-2xl bg-white/60 border border-stone-100">
+                <span class="block text-2xl font-black text-coffee-deep font-serif-title">4.9 / 5.0</span>
+                <span class="text-xs text-stone-500 font-medium" data-i18n="statRating">1,400+ Ulasan Puas</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT IMAGE SHOWCASE (ELEVATED LUXURY PRESENTATION) -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto max-w-md lg:max-w-none">
+              
+              <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-coffee-deep/30 border-2 border-amber-400/50 gold-glow">
+                <img 
+                  src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80" 
+                  alt="Viking Interior" 
+                  class="w-full h-[460px] sm:h-[510px] object-cover hover:scale-105 transition-transform duration-700"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 text-white space-y-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-[10px] font-extrabold bg-gradient-to-r from-amber-600 to-amber-500 text-stone-950 px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">Boutique Cafe</span>
+                    <span class="text-[10px] font-bold text-amber-200 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20">Outdoor & AC Indoor</span>
+                  </div>
+                  <p class="font-serif-title text-xl sm:text-2xl font-bold pt-1">Suasana Hangat, Mewah & Menginspirasi</p>
+                  <p class="text-stone-300 text-xs">Arsitektur industrial modern berpadu tanaman asri dan panggung akustik syahdu.</p>
+                </div>
+              </div>
+
+              <!-- Floating Card 1: Signature Drink -->
+              <div class="absolute -top-6 -left-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-2xl border border-amber-300/80 flex items-center gap-3 animate-bounce-slow max-w-xs gold-glow">
+                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=150&q=80" alt="Kopi Viking" class="w-14 h-14 rounded-2xl object-cover shadow-sm border border-stone-200" />
+                <div>
+                  <span class="text-[9px] font-black text-amber-800 uppercase tracking-widest block">✦ BARISTA RESERVE</span>
+                  <h4 class="font-bold text-xs text-stone-900 font-serif-title">Kopi Viking Aren</h4>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="text-xs font-black text-amber-950 font-sans">Rp 32.000</span>
+                    <span class="text-[10px] text-amber-500 font-bold">★ 4.9</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Floating Card 2: Truffle Fries -->
+              <div class="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-2xl border border-amber-300/80 flex items-center gap-3 max-w-xs gold-glow">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-900 border border-amber-300 flex items-center justify-center font-bold text-2xl flex-shrink-0 shadow-sm">
+                  🍟
+                </div>
+                <div>
+                  <span class="text-[9px] font-black text-emerald-800 uppercase tracking-widest block">✦ CHEF'S SIGNATURE</span>
+                  <h4 class="font-bold text-xs text-stone-900 font-serif-title">Truffle Parmesan Fries</h4>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <span class="text-xs font-black text-stone-800 font-sans">Rp 29.000</span>
+                    <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 rounded font-bold">Gourmet</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: TEMPAT DUDUK & SCAN PESANAN (SMART TABLE ORDERING) -->
+    <section id="meja-scan" class="py-16 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="bg-gradient-to-br from-coffee-dark via-stone-900 to-coffee-deep rounded-3xl p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+          
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div class="lg:col-span-7 space-y-5">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider border border-amber-400/30">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span data-i18n="tableBannerTag">SISTEM SCAN-TO-ORDER MEJA</span>
+              </div>
+
+              <h2 class="font-serif-title text-2xl sm:text-4xl font-bold leading-tight" data-i18n="tableBannerTitle">
+                Duduk Nyaman di Meja, Scan QR & Langsung Muncul Katalog Harga Lengkap!
+              </h2>
+
+              <p class="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl" data-i18n="tableBannerDesc">
+                Setiap meja di VIKING (Meja 01 s/d 20) dilengkapi akrilik kode QR khusus. Begitu Anda scan dengan kamera HP, nomor meja Anda langsung terkunci dan katalog 50+ menu lengkap dengan harga, foto, serta macam-macam makanan & minuman langsung muncul seketika!
+              </p>
+
+              <!-- 3-Step Scan Workflow Cards -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                <div class="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/10">
+                  <div class="text-xl mb-1">🪑</div>
+                  <h4 class="font-bold text-xs text-white">1. Pilih Meja Duduk</h4>
+                  <p class="text-[11px] text-stone-300 mt-0.5">Duduk di area indoor ber-AC, outdoor taman, atau VIP room.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/10">
+                  <div class="text-xl mb-1">📷</div>
+                  <h4 class="font-bold text-xs text-white">2. Scan Akrilik Meja</h4>
+                  <p class="text-[11px] text-stone-300 mt-0.5">Buka kamera ponsel, scan QR stand untuk membuka menu.</p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-xs p-3.5 rounded-2xl border border-white/10">
+                  <div class="text-xl mb-1">☕</div>
+                  <h4 class="font-bold text-xs text-white">3. Diantar ke Meja</h4>
+                  <p class="text-[11px] text-stone-300 mt-0.5">Pesan hidangan favorit, barista langsung mengantarkan.</p>
+                </div>
+              </div>
+
+              <!-- Quick Table Simulation Chips -->
+              <div class="pt-3">
+                <span class="text-xs font-semibold text-amber-200 block mb-2">⚡ Coba Langsung Simulasi Scan Meja (Klik Meja Pilihan Anda):</span>
+                <div class="flex flex-wrap gap-2">
+                  <button onclick="selectCustomerTable(1)" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-amber-500 hover:text-stone-950 font-bold text-xs transition-colors border border-white/20 cursor-pointer">
+                    Meja 01 (Indoor)
+                  </button>
+                  <button onclick="selectCustomerTable(3)" class="px-3 py-1.5 rounded-xl bg-amber-500 text-stone-950 font-bold text-xs hover:bg-amber-400 transition-colors shadow-sm cursor-pointer">
+                    Meja 03 (Colokan) ★
+                  </button>
+                  <button onclick="selectCustomerTable(7)" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-amber-500 hover:text-stone-950 font-bold text-xs transition-colors border border-white/20 cursor-pointer">
+                    Meja 07 (Garden)
+                  </button>
+                  <button onclick="selectCustomerTable(12)" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-amber-500 hover:text-stone-950 font-bold text-xs transition-colors border border-white/20 cursor-pointer">
+                    Meja 12 (Outdoor)
+                  </button>
+                  <button onclick="selectCustomerTable(16)" class="px-3 py-1.5 rounded-xl bg-white/15 hover:bg-amber-500 hover:text-stone-950 font-bold text-xs transition-colors border border-white/20 cursor-pointer">
+                    Meja 16 (VIP Room)
+                  </button>
+                </div>
+              </div>
+
+              <div class="pt-2 flex flex-wrap gap-3">
+                <button 
+                  onclick="openTableSelectorModal()"
+                  class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-6 py-3 rounded-2xl text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2 cursor-pointer">
+                  <span>🪑</span>
+                  <span data-i18n="btnScanSimulator">Buka Denah 20 Meja</span>
+                </button>
+
+                <button 
+                  onclick="window.vikingAdmin.openPortal(); window.vikingAdmin.switchTab('tables');"
+                  class="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-3 rounded-2xl text-xs sm:text-sm backdrop-blur-xs transition-all border border-white/20 flex items-center gap-2 cursor-pointer">
+                  <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                  <span data-i18n="btnPrintQRCodes">Cetak QR Code Meja (Admin Resto)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Visual 3D Acrylic QR Mockup (LUXURY GOLD & BRASS STAND) -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center">
+              <div onclick="selectCustomerTable(3)" class="acrylic-stand relative p-6 pt-7 pb-6 rounded-3xl text-stone-900 text-center max-w-[280px] sm:max-w-xs w-full cursor-pointer group gold-glow" title="Klik untuk coba simulasi scan Meja 03">
+                <!-- 4 Brass Corner Rivets for Luxury Realism -->
+                <div class="acrylic-rivet absolute top-3.5 left-3.5"></div>
+                <div class="acrylic-rivet absolute top-3.5 right-3.5"></div>
+                <div class="acrylic-rivet absolute bottom-3.5 left-3.5"></div>
+                <div class="acrylic-rivet absolute bottom-3.5 right-3.5"></div>
+
+                <div class="flex items-center justify-between border-b border-stone-200/80 pb-2 mb-2 px-2">
+                  <span class="text-[9px] font-black text-amber-900 tracking-widest uppercase">AKRILIK MEJA VIKING</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                </div>
+                
+                <span class="text-[9px] font-bold text-amber-800 tracking-[0.25em] uppercase block">✦ RESERVE & ROASTERY ✦</span>
+                <h4 class="font-black text-2xl font-serif-title tracking-tight text-coffee-deep mt-0.5">VIKING</h4>
+                <span class="text-[10px] font-semibold text-stone-500 tracking-wider block">Specialty Coffee & Eatery</span>
+
+                <div class="my-3 p-3 bg-white rounded-2xl border border-stone-200 shadow-inner flex items-center justify-center">
+                  <img 
+                    id="standDemoQrImg"
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fvikingcoffee.com%2F%3Ftable%3D03%23menu" 
+                    alt="Demo Table QR" 
+                    class="w-36 h-36 rounded-xl group-hover:scale-105 transition-transform"
+                  />
+                </div>
+
+                <div class="bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 text-amber-300 font-black text-sm py-1.5 px-6 rounded-xl inline-block shadow-md border border-amber-500/30">
+                  MEJA 03
+                </div>
+
+                <p class="text-[11px] text-stone-600 mt-2 font-semibold leading-tight">
+                  Indoor AC (Colokan) • Wi-Fi 150 Mbps
+                </p>
+
+                <div class="mt-3 py-1.5 px-3 bg-gradient-to-r from-amber-100 to-amber-50 text-amber-950 rounded-xl text-[11px] font-bold border border-amber-300 group-hover:bg-amber-600 group-hover:text-white transition-colors shadow-xs">
+                  👉 Klik untuk Simulasi Scan Meja 03
+                </div>
+              </div>
+              <div class="acrylic-base"></div>
+              <span class="text-[11px] text-amber-200/80 mt-2 font-medium tracking-wide">✦ Akrilik Meja Resto VIKING ✦</span>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: MENU INTERAKTIF & KATALOG PRODUK (50+ ITEMS) -->
+    <section id="menu" class="py-20 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- ACTIVE TABLE WELCOME BANNER (VIP CONCIERGE SERVICE ON QR SCAN) -->
+        <div id="activeTableBanner" class="hidden mb-10 p-6 sm:p-7 rounded-3xl bg-gradient-to-r from-[#120a06] via-[#24150d] to-[#120a06] text-white shadow-2xl border-2 border-amber-400/50 gold-glow relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-52 h-52 bg-amber-500/15 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="absolute -top-10 -left-10 w-40 h-40 bg-amber-700/15 rounded-full blur-2xl pointer-events-none"></div>
+          
+          <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+            <div class="flex items-center gap-4">
+              <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/30 to-amber-900/40 text-amber-300 border border-amber-400/50 flex items-center justify-center text-3xl font-black flex-shrink-0 shadow-lg">
+                🪑
+              </div>
+              <div>
+                <div class="inline-flex items-center gap-2 mb-0.5">
+                  <span class="flex h-2.5 w-2.5 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </span>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-gradient-to-r from-emerald-600 to-emerald-500 text-white uppercase tracking-widest shadow-xs">✦ VIP Table Service Aktif</span>
+                  <span class="text-xs text-amber-200 font-semibold" id="tableBannerAreaText">Indoor AC</span>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-bold font-serif-title mt-1 text-white">
+                  Selamat Datang di <span id="tableBannerNameText" class="text-gold-gradient font-black">Meja 03</span>!
+                </h3>
+                <p class="text-xs sm:text-sm text-stone-300 mt-1 leading-relaxed max-w-2xl font-normal">
+                  Koleksi menu pilihan & daftar harga lengkap siap dipesan langsung dari meja Anda. Barista kami akan segera meracik dan menyajikan pesanan terbaik ke meja ini.
+                </p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2.5 self-end sm:self-center flex-shrink-0">
+              <button onclick="openTableSelectorModal()" class="px-4 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition-all cursor-pointer flex items-center gap-1.5 shadow-sm">
+                <span>🔄</span>
+                <span>Ganti Meja</span>
+              </button>
+              <button onclick="window.cafeCart.openDrawer()" class="btn-luxury-gold px-5 py-3 rounded-2xl text-xs sm:text-sm flex items-center gap-2 cursor-pointer shadow-lg">
+                <span>🛍️ Pesanan Meja</span>
+                <span class="cart-count-badge bg-stone-950 text-amber-300 px-2 py-0.5 rounded-full text-[10px] font-black">0</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Header Section -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div>
+            <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest mb-2">
+              <span class="w-6 h-0.5 bg-amber-800"></span>
+              <span data-i18n="menuTag">Katalog Harga & Varian Menu</span>
+            </div>
+            <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold" data-i18n="menuTitle">
+              Koleksi Menu & Harga VIKING
+            </h2>
+            <p class="text-stone-500 text-sm mt-1" data-i18n="menuSubtitle">
+              Tersedia 50+ aneka kopi Nusantara, artisan non-coffee, snack & finger food, pastry segar, dan hidangan utama.
+            </p>
+          </div>
+
+          <!-- Quick Actions & View Switcher -->
+          <div class="flex items-center gap-2 flex-wrap">
+            <!-- View Mode Switcher: Grid vs List -->
+            <div class="inline-flex bg-stone-100 p-1 rounded-2xl border border-stone-200">
+              <button 
+                id="viewModeGridBtn"
+                onclick="setMenuViewMode('grid')" 
+                title="Tampilan Grid Kartu Foto"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-white text-stone-900 shadow-xs cursor-pointer flex items-center gap-1.5">
+                <span>🖼️</span>
+                <span class="hidden sm:inline">Kartu Foto</span>
+              </button>
+              <button 
+                id="viewModeListBtn"
+                onclick="setMenuViewMode('list')" 
+                title="Tampilan Daftar Menu & Harga Ringkas"
+                class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-stone-600 hover:text-stone-900 cursor-pointer flex items-center gap-1.5">
+                <span>📋</span>
+                <span>Daftar Harga Ringkas</span>
+              </button>
+            </div>
+
+            <button 
+              class="open-cart-trigger inline-flex items-center gap-2 bg-amber-900 text-white font-bold px-4 py-2.5 rounded-2xl text-xs shadow-md shadow-amber-950/20 hover:bg-amber-950 transition-all cursor-pointer">
+              <svg class="w-4 h-4 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <span data-i18n="btnViewCart">Keranjang</span> (<span class="cart-count-badge font-bold">0</span>)
+            </button>
+          </div>
+        </div>
+
+        <!-- Search, Filter & Sort Bar -->
+        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-stone-200/90 shadow-xs mb-8 space-y-4">
+          <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
+            
+            <!-- Search Input -->
+            <div class="relative w-full md:w-96">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+              <input 
+                type="text" 
+                id="menuSearchInput" 
+                placeholder="Cari kopi, aren, matcha, cireng, kentang, rice bowl..." 
+                class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200 rounded-2xl text-xs md:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors"
+              />
+            </div>
+
+            <!-- Sort Dropdown & Count -->
+            <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+              <span id="menuCountDisplay" class="text-xs font-semibold text-stone-500">
+                Memuat menu...
+              </span>
+
+              <select id="menuSortSelect" class="text-xs bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 font-medium text-stone-700 focus:outline-hidden">
+                <option value="popular">Urutkan: Terpopuler</option>
+                <option value="price-low">Harga: Terendah ke Tertinggi</option>
+                <option value="price-high">Harga: Tertinggi ke Terendah</option>
+                <option value="name-az">Nama: A - Z</option>
+              </select>
+            </div>
+
+          </div>
+
+          <!-- Main Category Badges / Tabs (Scrollable on Mobile) -->
+          <div id="menuCategoriesContainer" class="flex items-center gap-2 overflow-x-auto pb-1 pt-1 no-scrollbar">
+            <!-- Dynamically populated by JS with counts -->
+          </div>
+
+          <!-- Sub-Filter Quick Chips (Best Seller, Cold, Hot, Snack, Sweet, Spicy) -->
+          <div id="menuSubFiltersContainer" class="flex items-center gap-2 overflow-x-auto pt-2 border-t border-stone-100 no-scrollbar">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </div>
+
+        <!-- MENU ITEMS CONTAINER (Handles Grid & List Views smoothly) -->
+        <div id="menuGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- Dynamically populated by js/app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: FASILITAS & SUASANA (KENAPA COCOK UNTUK WFC & SANTAI) -->
+    <section id="suasana" class="py-20 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest mb-2">
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+            <span>Kenyamanan Pengunjung</span>
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+          </div>
+          <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold">
+            Fasilitas Terbaik di Seluruh Sudut VIKING
+          </h2>
+          <p class="text-stone-500 text-sm mt-2">
+            Dari rapat formal kantor, nugas skripsi santai, hingga obrolan sore di taman bersama hewan peliharaan, kami siapkan ruang terbaik untuk Anda.
+          </p>
+        </div>
+
+        <!-- Facilities Grid -->
+        <div id="facilitiesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- SECTION: LIVE MUSIC PANGGUNG & JADWAL MINGGUAN -->
+        <div id="live-music" class="mt-14 rounded-3xl bg-gradient-to-br from-stone-950 via-coffee-deep to-amber-950 text-white p-8 sm:p-12 border-2 border-amber-500/40 shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-amber-700/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="relative z-10 space-y-8">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-6">
+              <div>
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider border border-amber-400/30 mb-3">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
+                  <span>LIVE MUSIC SETIAP WEEKEND • FREE ENTRY (GRATIS)</span>
+                </div>
+                <h3 class="font-serif-title text-2xl sm:text-4xl font-bold leading-tight">
+                  Suasana Syahdu Bersama Panggung Live Music VIKING
+                </h3>
+                <p class="text-stone-300 text-sm sm:text-base mt-2 max-w-2xl leading-relaxed">
+                  Rasakan atmosfer hangat di bawah gemerlap lampu taman outdoor VIKING. Nikmati sajian kopi pilihan, kudapan gurih, dan dessert manis sambil ditemani alunan petikan gitar akustik merdu, lagu pop favorit, dan lantunan jazz santai.
+                </p>
+              </div>
+
+              <!-- Live Music Action Buttons -->
+              <div class="flex flex-wrap items-center gap-3 flex-shrink-0">
+                <a 
+                  href="https://wa.me/6281234567890?text=Halo%20Admin%20Viking,%20saya%20sedang%20duduk%20di%20meja%20dan%20ingin%20request%20lagu%20ke%20pengisi%20Live%20Music" 
+                  target="_blank" 
+                  class="px-5 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs sm:text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2 cursor-pointer">
+                  <span>🎵</span>
+                  <span>Request Lagu via WA</span>
+                </a>
+                <a 
+                  href="#reservasi" 
+                  onclick="selectStageTableForReservation()"
+                  class="px-5 py-3 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all flex items-center gap-2 cursor-pointer">
+                  <span>🪑</span>
+                  <span>Booking Meja Depan Panggung</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3-Day Weekly Live Music Schedule Cards -->
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <h4 class="font-bold text-base sm:text-lg text-white flex items-center gap-2">
+                  <span>📅</span>
+                  <span>Jadwal Penampilan Live Music Minggu Ini</span>
+                </h4>
+                <span class="text-xs text-amber-300 font-semibold hidden sm:inline">Panggung Outdoor Garden</span>
+              </div>
+              <div id="liveMusicScheduleGrid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Rendered dynamically by app.js from LIVE_MUSIC_SCHEDULE -->
+              </div>
+            </div>
+
+            <!-- Perks / Highlights Strip -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-white/10 text-xs text-stone-300">
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold flex-shrink-0 text-sm">🎟️</span>
+                <span><strong>Gratis Masuk (Free Entry):</strong> Tanpa tiket, cukup pesan menu favorit Anda.</span>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold flex-shrink-0 text-sm">🎤</span>
+                <span><strong>Open Mic Session:</strong> Kesempatan bernyanyi bersama band di sesi kedua.</span>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold flex-shrink-0 text-sm">📱</span>
+                <span><strong>Scan QR Pesan di Meja:</strong> Pesan makanan & minuman tanpa beranjak dari kursi.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Special Banner: Meeting Room Highlight (VIP Executive Lounge) -->
+        <div class="mt-12 rounded-3xl bg-gradient-to-r from-coffee-dark via-[#1d120a] to-stone-900 text-white p-8 sm:p-12 relative overflow-hidden shadow-2xl border-2 border-amber-500/30 gold-glow">
+          <div class="absolute -right-12 -top-12 w-64 h-64 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="relative z-10 max-w-2xl space-y-4">
+            <span class="bg-amber-500/20 text-amber-300 font-bold px-3 py-1 rounded-full text-xs uppercase tracking-wider border border-amber-400/30 inline-block">
+              ✦ Fasilitas Eksklusif VIP
+            </span>
+            <h3 class="font-serif-title text-2xl sm:text-3xl font-bold">
+              Butuh Ruang Khusus Untuk Rapat Tim atau Presentasi Klien?
+            </h3>
+            <p class="text-stone-300 text-sm leading-relaxed">
+              Gunakan <strong class="text-gold-subtle">Private Meeting Room VIKING</strong> (Meja 19 & 20). Dilengkapi dengan 55" 4K Smart TV, HDMI wireless caster, whiteboard kaca, AC mandiri, sound-insulation, dan layanan pesan menu langsung dari meja Anda.
+            </p>
+            <div class="pt-2 flex flex-wrap gap-4">
+              <a href="#reservasi" class="btn-luxury-gold px-6 py-3 rounded-2xl text-xs shadow-lg">
+                💼 Pesan Private Meeting Room
+              </a>
+              <a href="https://wa.me/6281234567890?text=Halo%20Admin%20Viking,%20saya%20mau%20tanya%20paket%20Private%20Meeting%20Room" target="_blank" class="bg-white/10 hover:bg-white/20 text-white font-medium px-6 py-3 rounded-2xl text-xs backdrop-blur-xs transition-all border border-white/20 flex items-center gap-1.5">
+                <span>💬</span>
+                <span>Konsultasi Paket via WA</span>
+              </a>
+            </div>
+          </div>
+          <div class="hidden md:block absolute right-12 bottom-6 text-white/5 font-serif-title text-9xl font-black select-none pointer-events-none">
+            MEET
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: GALERI FOTO & INSTAGRAMMABLE SPOTS -->
+    <section id="galeri" class="py-20 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest mb-2">
+              <span class="w-6 h-0.5 bg-amber-800"></span>
+              <span>Sudut Cerita Kami</span>
+            </div>
+            <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold">
+              Potret Suasana & Kreasi Kami
+            </h2>
+            <p class="text-stone-500 text-sm mt-1">Abadikan momen terbaik Anda dan tag kami di Instagram @viking.id</p>
+          </div>
+
+          <!-- Gallery Filters -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-1">
+            <button onclick="setGalleryFilter('all')" data-filter="all" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-amber-900 text-white cursor-pointer transition-all">
+              Semua
+            </button>
+            <button onclick="setGalleryFilter('livemusic')" data-filter="livemusic" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-stone-600 hover:bg-stone-100 cursor-pointer transition-all border border-stone-200">
+              Live Music 🎸
+            </button>
+            <button onclick="setGalleryFilter('coffee')" data-filter="coffee" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-stone-600 hover:bg-stone-100 cursor-pointer transition-all border border-stone-200">
+              Kopi & Barista
+            </button>
+            <button onclick="setGalleryFilter('interior')" data-filter="interior" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-stone-600 hover:bg-stone-100 cursor-pointer transition-all border border-stone-200">
+              Indoor & QR Meja
+            </button>
+            <button onclick="setGalleryFilter('outdoor')" data-filter="outdoor" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-stone-600 hover:bg-stone-100 cursor-pointer transition-all border border-stone-200">
+              Outdoor Garden
+            </button>
+            <button onclick="setGalleryFilter('food')" data-filter="food" class="gallery-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-white text-stone-600 hover:bg-stone-100 cursor-pointer transition-all border border-stone-200">
+              Food & Pastry
+            </button>
+          </div>
+        </div>
+
+        <div id="galleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated by app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: ULASAN & TESTIMONI PELANGGAN -->
+    <section id="ulasan" class="py-20 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest mb-2">
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+            <span>Ulasan Pengunjung</span>
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+          </div>
+          <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold">
+            Cerita Dari Para Pelanggan Setia VIKING
+          </h2>
+          <p class="text-stone-500 text-sm mt-2">
+            Pengalaman nyata menikmati kopi, bekerja nyaman, dan kemudahan pesan dari meja.
+          </p>
+        </div>
+
+        <div id="testimonialsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- Google Review Counter Banner (Luxury Bronze & Gold Strip) -->
+        <div class="mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#170e08] via-[#24150d] to-[#170e08] text-white border-2 border-amber-500/40 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div class="flex items-center gap-4 relative z-10">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-stone-950 shadow-md flex items-center justify-center text-2xl font-black flex-shrink-0">
+              G
+            </div>
+            <div>
+              <div class="flex items-center justify-center sm:justify-start gap-1 text-amber-400 text-sm">
+                ★★★★★ <span class="text-white font-black text-base ml-1">4.9 / 5.0</span>
+                <span class="text-[10px] text-amber-200 uppercase tracking-widest bg-amber-500/20 px-2 py-0.5 rounded-md ml-2 border border-amber-400/30">Google Verified</span>
+              </div>
+              <span class="text-xs text-stone-300 mt-1 block">Berdasarkan 1,420+ ulasan pengunjung asli di Jl. Tidar, Sumbersari, Jember</span>
+            </div>
+          </div>
+          <a 
+            href="https://maps.google.com" 
+            target="_blank" 
+            class="btn-luxury-gold px-6 py-3 rounded-2xl text-xs relative z-10 flex items-center gap-2">
+            <span>⭐ Tulis Ulasan di Google Maps</span>
+            <span>→</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: RESERVASI MEJA & PEMESANAN TEMPAT -->
+    <section id="reservasi" class="py-20 section-hairline relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-5 space-y-6">
+            <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest">
+              <span class="w-6 h-0.5 bg-amber-800"></span>
+              <span data-i18n="resTag">Layanan Reservasi</span>
+            </div>
+
+            <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold leading-tight" data-i18n="resTitle">
+              Amankan Meja Favorit Anda Sebelum Berkunjung
+            </h2>
+
+            <p class="text-stone-600 text-sm leading-relaxed" data-i18n="resDesc">
+              Ingin memastikan ketersediaan tempat untuk rapat kerja penting, perayaan ulang tahun, atau sekadar ingin dapat meja favorit di area taman?
+            </p>
+
+            <div class="space-y-3 pt-2">
+              <div class="flex items-center gap-3 text-xs text-stone-700">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold flex-shrink-0">✓</span>
+                <span>Gratis biaya reservasi untuk area reguler (Indoor & Garden).</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs text-stone-700">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold flex-shrink-0">✓</span>
+                <span>Meja akan kami hold hingga 20 menit dari jam reservasi.</span>
+              </div>
+              <div class="flex items-center gap-3 text-xs text-stone-700">
+                <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold flex-shrink-0">✓</span>
+                <span>Konfirmasi instan otomatis terhubung ke WhatsApp Manager kami.</span>
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-xs flex items-center gap-4">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center flex-shrink-0">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.51c-.19-.09-1.1-.54-1.27-.6-.17-.06-.3-.09-.42.09-.12.19-.48.6-.59.72-.11.12-.23.14-.42.05-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.29-.34.09-.12.13-.19.19-.32.06-.13.03-.25-.01-.34-.05-.09-.42-1.02-.58-1.39-.15-.37-.31-.32-.42-.32h-.36c-.13 0-.33.05-.5.23-.17.19-.66.65-.66 1.58 0 .93.68 1.83.77 1.96.09.12 1.33 2.04 3.23 2.86.45.2.8.31 1.08.4.46.14.88.12 1.21.07.37-.05 1.1-.45 1.26-.88.15-.44.15-.81.11-.88-.05-.08-.18-.13-.37-.22z"/></svg>
+              </div>
+              <div>
+                <span class="text-[11px] text-stone-500 font-medium block">Butuh reservasi rombongan > 15 orang?</span>
+                <a href="https://wa.me/6281234567890" target="_blank" class="text-sm font-bold text-emerald-700 hover:text-emerald-800">
+                  Chat Langsung via WhatsApp Admin →
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="bg-white p-8 sm:p-10 rounded-3xl border border-stone-200/90 shadow-xl shadow-stone-200/50">
+              
+              <h3 class="font-serif-title font-bold text-2xl text-stone-900 mb-2">Formulir Reservasi Meja</h3>
+              <p class="text-xs text-stone-500 mb-6">Silakan lengkapi data di bawah ini. Tidak dipungut biaya apapun.</p>
+
+              <form id="reservationForm" class="space-y-4">
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Nama Lengkap *</label>
+                    <input 
+                      type="text" 
+                      id="resName" 
+                      required 
+                      placeholder="Contoh: Budi Santoso"
+                      class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Nomor WhatsApp *</label>
+                    <input 
+                      type="tel" 
+                      id="resPhone" 
+                      required 
+                      placeholder="Contoh: 08123456789"
+                      class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Jumlah Tamu *</label>
+                    <select id="resGuests" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors">
+                      <option value="1 - 2 Orang">1 - 2 Orang</option>
+                      <option value="3 - 4 Orang" selected>3 - 4 Orang</option>
+                      <option value="5 - 8 Orang">5 - 8 Orang</option>
+                      <option value="9 - 15 Orang">9 - 15 Orang</option>
+                      <option value="Lebih dari 15 Orang">Group (> 15 Orang)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Tanggal *</label>
+                    <input 
+                      type="date" 
+                      id="resDate" 
+                      required 
+                      class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Jam Kedatangan *</label>
+                    <select id="resTime" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors">
+                      <option value="09:00">09:00 WIB (Pagi)</option>
+                      <option value="11:30">11:30 WIB (Makan Siang)</option>
+                      <option value="13:30">13:30 WIB (WFC Siang)</option>
+                      <option value="15:30">15:30 WIB (Sore Coffee)</option>
+                      <option value="17:00">17:00 WIB (Golden Hour)</option>
+                      <option value="19:00" selected>19:00 WIB (Malam)</option>
+                      <option value="20:30">20:30 WIB (Santai Malam)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Pilihan Area Meja *</label>
+                    <select id="resArea" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors">
+                      <option value="Outdoor Garden (Depan Panggung Live Music)">Outdoor Garden (Depan Panggung Live Music) 🎸</option>
+                      <option value="Indoor AC (Quiet Zone / Dekat Colokan)">Indoor AC (Quiet WFC Zone)</option>
+                      <option value="Outdoor Garden (Rindang Pepohonan / Smoking)">Outdoor Garden (Smoking Friendly)</option>
+                      <option value="Semi-Outdoor Terrace">Semi-Outdoor Terrace</option>
+                      <option value="Private VIP Meeting Room">Private VIP Meeting Room (Smart TV)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Keperluan / Acara</label>
+                    <select id="resOccasion" class="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors">
+                      <option value="Nonton Live Music & Weekend Acoustic">Nonton Live Music & Weekend Acoustic 🎸</option>
+                      <option value="Nongkrong Santai">Nongkrong Santai</option>
+                      <option value="Kerja / WFC (Work From Cafe)">Kerja / WFC (Laptopan)</option>
+                      <option value="Meeting Bisnis / Klien">Meeting Bisnis / Klien</option>
+                      <option value="Perayaan Ulang Tahun / Gathering">Perayaan Ulang Tahun / Gathering</option>
+                      <option value="Kencan Romantis">Kencan / Romantic Date</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">Catatan Khusus (Opsional)</label>
+                  <textarea 
+                    id="resNotes" 
+                    rows="2" 
+                    placeholder="Contoh: Tolong siapkan meja dekat colokan listrik atau minta baby chair."
+                    class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-2xl text-xs sm:text-sm focus:outline-hidden focus:border-amber-800 focus:bg-white transition-colors"></textarea>
+                </div>
+
+                <button 
+                  type="submit" 
+                  class="btn-luxury-gold w-full py-4 rounded-2xl text-sm font-black shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+                  <svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  <span data-i18n="resBtnSubmit">Konfirmasi Reservasi Meja VIP</span>
+                </button>
+
+                <p class="text-[11px] text-stone-400 text-center">
+                  Setelah menekan tombol, rincian akan dikirimkan ke WhatsApp Manager kami untuk validasi instan.
+                </p>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 8: FAQ & INFORMASI -->
+    <section id="faq" class="py-20 section-hairline">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-14">
+          <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest mb-2">
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+            <span>Bantuan Informasi</span>
+            <span class="w-6 h-0.5 bg-amber-800"></span>
+          </div>
+          <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold">
+            Pertanyaan Yang Sering Diajukan
+          </h2>
+          <p class="text-stone-500 text-sm mt-2">
+            Informasi praktis seputar kebijakan cafe, fasilitas, dan operasional Viking.
+          </p>
+        </div>
+
+        <div id="faqsContainer" class="space-y-4">
+          <!-- Populated by app.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 9: LOKASI & JAM OPERASIONAL -->
+    <section id="lokasi" class="py-20 section-hairline">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-5 space-y-6">
+            <div class="inline-flex items-center gap-2 text-amber-800 text-xs font-bold uppercase tracking-widest">
+              <span class="w-6 h-0.5 bg-amber-800"></span>
+              <span>Temukan Kami</span>
+            </div>
+
+            <h2 class="font-serif-title text-3xl sm:text-4xl text-coffee-deep font-bold">
+              Kunjungi Ruang Hangat VIKING di Sumbersari, Jember
+            </h2>
+
+            <div class="p-6 rounded-3xl bg-white border border-stone-200/80 shadow-xs space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-stone-900 text-sm">Alamat Lengkap</h4>
+                  <p id="locationAddressText" class="text-xs text-stone-600 mt-1 leading-relaxed">
+                    Jl. Tidar, Pelindu, Karangrejo, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124
+                  </p>
+                  <span class="inline-block mt-2 text-[11px] font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md">
+                    Patokan: Kawasan Tidar / Karangrejo, Sumbersari - Jember
+                  </span>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 pt-3 border-t border-stone-100">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-stone-900 text-sm">Jam Operasional</h4>
+                  <div class="text-xs text-stone-600 mt-1 space-y-0.5">
+                    <p id="locationHoursWeekday"><strong>Senin - Jumat:</strong> 08:00 - 23:00 WIB</p>
+                    <p id="locationHoursWeekend"><strong>Sabtu - Minggu:</strong> 07:00 - 24:00 WIB</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3 pt-3 border-t border-stone-100">
+                <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-900 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-stone-900 text-sm">Hubungi Kami</h4>
+                  <p class="text-xs text-stone-600 mt-1">WhatsApp: <a href="https://wa.me/6281234567890" target="_blank" class="dynamic-wa-link text-emerald-700 font-bold hover:underline">+62 812-3456-7890</a></p>
+                  <p class="text-xs text-stone-600">Telepon: <span id="locationPhoneText">+62 812-3456-7890</span></p>
+                </div>
+              </div>
+            </div>
+
+            <a 
+              href="https://maps.google.com/?q=Jl.+Tidar+Karangrejo+Kec.+Sumbersari+Kabupaten+Jember+Jawa+Timur+68124" 
+              target="_blank" 
+              class="w-full inline-flex items-center justify-center gap-2 btn-luxury-gold py-3.5 px-6 rounded-2xl text-xs sm:text-sm shadow-lg transition-all">
+              <svg class="w-4 h-4 text-stone-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+              <span>🧭 Buka Petunjuk Arah di Google Maps</span>
+            </a>
+
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="rounded-3xl overflow-hidden shadow-xl border-4 border-white bg-stone-200 h-[420px] relative">
+              <iframe 
+                title="Google Maps Lokasi Viking"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3949.330882736181!2d113.7155!3d-8.1755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd695b28d4cf67f%3A0x8674514a6015570!2sJl.+Tidar%2C+Karangrejo%2C+Kec.+Sumbersari%2C+Kabupaten+Jember%2C+Jawa+Timur+68124!5e0!3m2!1sid!2sid!4v1650000000000!5m2!1sid!2sid" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+              <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-2 rounded-xl text-xs font-semibold text-stone-800 shadow-md">
+                📍 Jl. Tidar, Sumbersari, Jember
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-coffee-dark text-stone-400 text-xs pt-16 pb-12 border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-stone-800">
+        
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-amber-800 text-amber-200 flex items-center justify-center font-bold">
+              V
+            </div>
+            <div>
+              <span class="block font-serif-title font-bold text-xl text-white">Viking</span>
+              <span class="block text-[10px] text-amber-400 font-semibold tracking-widest uppercase">Specialty Coffee & Eatery</span>
+            </div>
+          </div>
+          <p class="text-stone-400 text-xs leading-relaxed max-w-sm">
+            Cita rasa juara, semangat tangguh, dan kehangatan sejati. Tempat ngopi dengan 50+ varian produk, fasilitas WFC, dan sistem scan pesan langsung dari meja Anda.
+          </p>
+          <div class="flex items-center gap-3 text-stone-300 pt-2">
+            <a href="https://instagram.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-amber-600 hover:text-white flex items-center justify-center transition-colors" title="Instagram">
+              IG
+            </a>
+            <a href="https://tiktok.com" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-amber-600 hover:text-white flex items-center justify-center transition-colors" title="TikTok">
+              TK
+            </a>
+            <a href="https://wa.me/6281234567890" target="_blank" class="w-8 h-8 rounded-full bg-white/10 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-colors" title="WhatsApp">
+              WA
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Navigasi Utama</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#beranda" class="hover:text-amber-300 transition-colors">Beranda</a></li>
+            <li><a href="#meja-scan" class="hover:text-amber-300 transition-colors">Meja & Scan QR</a></li>
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">Daftar Menu (50+)</a></li>
+            <li><a href="#live-music" class="hover:text-amber-300 transition-colors">🎸 Live Music Weekend</a></li>
+            <li><a href="#suasana" class="hover:text-amber-300 transition-colors">Fasilitas & Panggung</a></li>
+            <li><a href="#galeri" class="hover:text-amber-300 transition-colors">Galeri Foto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Kategori Produk</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">☕ Coffee-Based</a></li>
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">🍵 Non-Coffee & Tea</a></li>
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">🍟 Snack & Finger Food</a></li>
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">🍛 Makanan Berat / Meals</a></li>
+            <li><a href="#menu" class="hover:text-amber-300 transition-colors">🥐 Bakery & Pastry</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold text-sm mb-4">Akses CMS & Admin</h4>
+          <p class="text-stone-400 text-xs mb-3">Kelola katalog menu, jadwal live music, promo, status meja, dan kasir POS.</p>
+          <button onclick="window.vikingAdmin.openPortal()" class="cms-admin-trigger w-full btn-luxury-gold text-stone-950 font-bold py-2.5 rounded-xl text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-md">
+            <span>⚙️ Buka CMS Admin</span>
+            <span>→</span>
+          </button>
+          <button onclick="window.showWelcomeSplashAgain()" class="w-full mt-2 bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white font-medium py-2 rounded-xl text-xs transition-colors cursor-pointer flex items-center justify-center gap-1.5 border border-white/15">
+            <span>👋 Putar Ulang Sambutan Selamat Datang</span>
+          </button>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+        <p>© 2026 Viking. Hak Cipta Dilindungi Undang-Undang.</p>
+        <p>Zona Waktu: Asia/Jakarta (WIB) • Format Mata Uang: Rupiah (Rp)</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- FLOATING QUICK ORDER BAR (Muncul otomatis saat pelanggan memilih menu di meja) -->
+  <div id="floatingQuickOrderBar" class="hidden fixed bottom-5 inset-x-4 max-w-lg mx-auto z-40 bg-stone-900 text-white p-3.5 sm:p-4 rounded-2xl shadow-2xl border border-amber-500/50 flex items-center justify-between gap-3 animate-bounce-slow">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-amber-500 text-stone-950 font-black flex items-center justify-center flex-shrink-0 text-sm shadow-md">
+        <span id="floatingBarCountBadge">0</span>
+      </div>
+      <div>
+        <div class="text-[11px] text-amber-300 font-bold" id="floatingBarTableText">Pesanan Meja Anda</div>
+        <div class="text-sm sm:text-base font-extrabold text-white" id="floatingBarTotalText">Rp 0</div>
+      </div>
+    </div>
+    <button onclick="window.cafeCart.openDrawer()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold text-xs sm:text-sm flex items-center gap-1.5 shadow-md cursor-pointer transition-colors">
+      <span>Lihat Pesanan</span>
+      <span>→</span>
+    </button>
+  </div>
+
+  <!-- ==================== MODALS & DRAWERS ==================== -->
+
+  <!-- 1. CUSTOMER TABLE SELECTOR MODAL (DENAH MEJA 01 - 20) -->
+  <div id="customerTableSelectModal" onclick="if(event.target === this) closeTableSelectorModal()" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl border border-stone-200">
+      
+      <div class="flex items-center justify-between pb-4 border-b border-stone-100">
+        <div>
+          <h3 class="font-serif-title font-bold text-xl text-stone-900" data-i18n="selectModalTitle">Pilih Meja Tempat Duduk Anda</h3>
+          <p class="text-xs text-stone-500 mt-0.5" data-i18n="selectModalDesc">Pilih nomor meja di mana Anda sedang duduk untuk langsung mengunci lokasi pengantaran pesanan.</p>
+        </div>
+        <button onclick="closeTableSelectorModal()" class="p-2 text-stone-400 hover:text-stone-800 text-lg cursor-pointer">✕</button>
+      </div>
+
+      <!-- Area Legend -->
+      <div class="flex items-center gap-4 py-3 text-xs text-stone-600 border-b border-stone-100 flex-wrap">
+        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-emerald-500"></span> Kosong (Bisa Dipilih)</span>
+        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-stone-300"></span> Sedang Terisi</span>
+        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-amber-900"></span> Meja Anda Saat Ini</span>
+      </div>
+
+      <!-- Tables Grid (Meja 01 - 20) -->
+      <div id="customerTableListGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 py-4">
+        <!-- Rendered by js/admin.js -->
+      </div>
+
+      <div class="pt-4 border-t border-stone-100 flex justify-end">
+        <button onclick="closeTableSelectorModal()" class="px-5 py-2.5 rounded-xl bg-stone-100 text-stone-700 font-bold text-xs hover:bg-stone-200 cursor-pointer">
+          Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2. ITEM CUSTOMIZATION & DETAIL MODAL -->
+  <div id="itemDetailModal" onclick="if(event.target === this) closeItemModal()" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="modal-box bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-stone-200 transform scale-95 transition-transform duration-300">
+      
+      <div class="relative h-56 bg-stone-100">
+        <img id="modalItemImage" src="" alt="Menu item" class="w-full h-full object-cover" />
+        <button onclick="closeItemModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 text-white hover:bg-black flex items-center justify-center transition-colors cursor-pointer" aria-label="Tutup">
+          ✕
+        </button>
+        <div class="absolute bottom-3 left-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-amber-900" id="modalItemRating">
+          ★ 4.9
+        </div>
+      </div>
+
+      <div class="p-6">
+        <div class="flex items-start justify-between gap-4 mb-2">
+          <div>
+            <h3 id="modalItemName" class="font-serif-title font-bold text-xl sm:text-2xl text-stone-900">Nama Menu</h3>
+            <span id="modalItemBasePrice" class="text-sm font-extrabold text-amber-900 mt-0.5 block">Rp 0</span>
+          </div>
+        </div>
+
+        <p id="modalItemDesc" class="text-xs text-stone-600 leading-relaxed mb-6">Deskripsi menu</p>
+
+        <!-- Customization Options Container -->
+        <div id="modalItemOptionsContainer" class="border-t border-stone-100 pt-4 mb-4"></div>
+
+        <!-- Notes -->
+        <div class="mb-6">
+          <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5" data-i18n="notesLabel">Catatan Khusus</label>
+          <input 
+            type="text" 
+            id="modalItemNotes" 
+            placeholder="Contoh: Es dipisah, jangan terlalu manis, extra saus..." 
+            class="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:border-amber-800 focus:bg-white"
+          />
+        </div>
+
+        <!-- Quantity & Add to Cart Action -->
+        <div class="pt-4 border-t border-stone-100 flex items-center justify-between gap-4">
+          <div class="flex items-center bg-stone-100 rounded-2xl p-1 border border-stone-200">
+            <button onclick="updateModalQty(-1)" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white text-stone-800 font-bold text-sm shadow-xs hover:bg-stone-50 cursor-pointer">-</button>
+            <span id="modalItemQty" class="w-10 text-center font-bold text-stone-800 text-sm">1</span>
+            <button onclick="updateModalQty(1)" class="w-9 h-9 flex items-center justify-center rounded-xl bg-white text-stone-800 font-bold text-sm shadow-xs hover:bg-stone-50 cursor-pointer">+</button>
+          </div>
+
+          <button 
+            onclick="addCurrentModalItemToCart()"
+            class="flex-grow py-3.5 px-5 rounded-2xl btn-luxury-gold text-stone-950 font-black text-xs sm:text-sm shadow-lg transition-all flex items-center justify-between cursor-pointer">
+            <span class="text-stone-950" data-i18n="addToOrder">+ Tambahkan ke Pesanan</span>
+            <span id="modalTotalPrice" class="font-black bg-stone-950/15 px-2.5 py-1 rounded-xl text-stone-950">Rp 0</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. SHOPPING CART / CHECKOUT SLIDE-OVER DRAWER -->
+  <div id="cartOverlay" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs transition-opacity duration-300 opacity-0"></div>
+  <div id="cartDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+    
+    <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-50">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-amber-900 text-amber-200 flex items-center justify-center">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+        </div>
+        <h3 class="font-bold text-stone-900 text-base" data-i18n="cartTitle">Pesanan Meja Anda</h3>
+      </div>
+      <button id="closeCartDrawer" class="p-2 text-stone-400 hover:text-stone-700 cursor-pointer" aria-label="Tutup">
+        ✕
+      </button>
+    </div>
+
+    <div class="flex-grow overflow-y-auto p-5">
+      
+      <div id="cartEmptyState" class="py-16 text-center space-y-4">
+        <div class="w-16 h-16 mx-auto rounded-full bg-amber-50 text-amber-800 flex items-center justify-center">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+        </div>
+        <h4 class="font-bold text-stone-800 text-base" data-i18n="cartEmptyTitle">Belum Ada Pesanan</h4>
+        <p class="text-xs text-stone-500 max-w-xs mx-auto" data-i18n="cartEmptyDesc">Silakan pilih minuman, makanan, atau snack favorit Anda dari katalog.</p>
+        <button onclick="window.cafeCart.closeDrawer()" class="px-5 py-2.5 rounded-2xl bg-amber-900 text-white text-xs font-bold shadow-md cursor-pointer">
+          Mulai Pilih Menu
+        </button>
+      </div>
+
+      <div id="cartItemsList" class="space-y-3"></div>
+
+    </div>
+
+    <!-- Cart Footer & Dual Checkout Action -->
+    <div id="cartFooter" class="hidden border-t border-stone-200 p-5 bg-stone-50 space-y-4">
+      
+      <div class="space-y-1.5 text-xs">
+        <div class="flex justify-between text-stone-500">
+          <span data-i18n="subtotalLabel">Subtotal</span>
+          <span id="cartSubtotal" class="font-medium text-stone-800">Rp 0</span>
+        </div>
+        <div class="flex justify-between text-stone-500">
+          <span data-i18n="taxLabel">Pajak Resto PB1 (10%)</span>
+          <span id="cartTax" class="font-medium text-stone-800">Rp 0</span>
+        </div>
+        <div class="flex justify-between text-stone-900 font-extrabold text-sm pt-2 border-t border-stone-200">
+          <span data-i18n="totalLabel">Total Pembayaran</span>
+          <span id="cartGrandTotal" class="text-amber-900 font-black">Rp 0</span>
+        </div>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+          <label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer has-[:checked]:border-amber-800 has-[:checked]:bg-amber-100/60 transition-colors">
+            <input type="radio" name="orderType" value="dine-in" checked class="text-amber-800 focus:ring-amber-500" />
+            <span data-i18n="orderTypeDineIn">Makan di Tempat</span>
+          </label>
+          <label class="flex items-center justify-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer has-[:checked]:border-amber-800 has-[:checked]:bg-amber-100/60 transition-colors">
+            <input type="radio" name="orderType" value="takeaway" class="text-amber-800 focus:ring-amber-500" />
+            <span data-i18n="orderTypeTakeaway">Bungkus</span>
+          </label>
+        </div>
+
+        <div id="checkoutTableGroup" class="flex gap-2">
+          <input 
+            type="text" 
+            id="checkoutTableNumber" 
+            placeholder="Nomor Meja (Contoh: 03)"
+            class="flex-grow px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:border-amber-800 font-bold"
+          />
+          <button type="button" onclick="openTableSelectorModal()" class="px-3 py-2 bg-stone-200 hover:bg-stone-300 rounded-xl text-xs font-bold text-stone-700 cursor-pointer">
+            Pilih Meja
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <input 
+            type="text" 
+            id="checkoutCustomerName" 
+            required 
+            placeholder="Nama Anda *"
+            class="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:border-amber-800"
+          />
+          <input 
+            type="tel" 
+            id="checkoutCustomerPhone" 
+            placeholder="No. WhatsApp (Opsional)"
+            class="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:border-amber-800"
+          />
+        </div>
+
+        <input 
+          type="text" 
+          id="checkoutNotes" 
+          placeholder="Catatan tambahan untuk pesanan ini..."
+          class="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-xs focus:outline-hidden focus:border-amber-800"
+        />
+
+        <!-- DUAL ACTION BUTTONS -->
+        <div class="space-y-2 pt-1">
+          <!-- Direct to Kitchen / POS -->
+          <button 
+            type="button"
+            onclick="triggerCartCheckout('pos')"
+            class="w-full py-3.5 rounded-2xl btn-luxury-gold text-stone-950 font-black text-xs sm:text-sm shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-4 h-4 text-stone-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span data-i18n="btnCheckoutPos">Pesan Langsung ke Dapur / Kasir</span>
+          </button>
+
+          <!-- WhatsApp Checkout -->
+          <button 
+            type="button"
+            onclick="triggerCartCheckout('whatsapp')"
+            class="w-full py-3 rounded-2xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.51c-.19-.09-1.1-.54-1.27-.6-.17-.06-.3-.09-.42.09-.12.19-.48.6-.59.72-.11.12-.23.14-.42.05-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.29-.34.09-.12.13-.19.19-.32.06-.13.03-.25-.01-.34-.05-.09-.42-1.02-.58-1.39-.15-.37-.31-.32-.42-.32h-.36c-.13 0-.33.05-.5.23-.17.19-.66.65-.66 1.58 0 .93.68 1.83.77 1.96.09.12 1.33 2.04 3.23 2.86.45.2.8.31 1.08.4.46.14.88.12 1.21.07.37-.05 1.1-.45 1.26-.88.15-.44.15-.81.11-.88-.05-.08-.18-.13-.37-.22z"/></svg>
+            <span data-i18n="btnCheckoutWa">Kirim Pesanan via WhatsApp</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 4. CMS & ADMIN SUITE MODAL (PENGOLAH WEBSITE VIKING) -->
+  <div id="cmsAdminModal" onclick="if(event.target === this) window.vikingAdmin.closePortal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 transition-opacity duration-300 opacity-0">
+    <div class="cms-box bg-[#120b08] text-stone-200 rounded-3xl max-w-6xl w-full h-[94vh] flex flex-col shadow-2xl border border-amber-500/40 overflow-hidden transform scale-95 transition-transform duration-300">
+      
+      <!-- CMS Top Header -->
+      <div class="p-4 sm:p-5 border-b border-stone-800 flex items-center justify-between bg-stone-950/90 text-white flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-stone-950 font-black flex items-center justify-center text-lg shadow-md">
+            👑
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-base sm:text-lg text-white font-serif-title">CMS Admin & Pengolah Website VIKING</h3>
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">ONLINE</span>
+            </div>
+            <span class="text-xs text-amber-300/80">Kelola Profil Website, 50+ Menu & Harga, Jadwal Live Music, Denah Meja, dan POS Kasir</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="window.vikingAdmin.logout()" class="hidden sm:inline-flex px-3 py-1.5 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 text-xs font-bold border border-stone-700 transition-colors cursor-pointer">
+            Logout
+          </button>
+          <button onclick="window.vikingAdmin.closePortal()" class="p-2 text-stone-400 hover:text-white text-xl cursor-pointer" aria-label="Tutup CMS">✕</button>
+        </div>
+      </div>
+
+      <!-- CMS Responsive Tabs Navigation -->
+      <div class="flex items-center gap-1.5 p-2 sm:p-3 bg-stone-950/60 border-b border-stone-800 overflow-x-auto no-scrollbar flex-shrink-0">
+        <button onclick="window.vikingAdmin.switchTab('dashboard')" data-tab="dashboard" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950">
+          <span>📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('site-settings')" data-tab="site-settings" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>🌐</span>
+          <span>Konten Website</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('live-music')" data-tab="live-music" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>🎸</span>
+          <span>Jadwal Live Music</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('menu')" data-tab="menu" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>☕</span>
+          <span>Katalog Menu & Harga</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('tables')" data-tab="tables" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>🪑</span>
+          <span>Meja & QR Studio</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('orders')" data-tab="orders" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>🧾</span>
+          <span>Pesanan Dapur & POS</span>
+        </button>
+        <button onclick="window.vikingAdmin.switchTab('security')" data-tab="security" class="cms-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 text-stone-400 hover:bg-white/5">
+          <span>🔐</span>
+          <span>Keamanan & PIN</span>
+        </button>
+      </div>
+
+      <!-- CMS Tab Content Panels Container -->
+      <div class="flex-grow overflow-y-auto p-4 sm:p-6 bg-[#0c0704]">
+        
+        <!-- ==================== PANEL 1: DASHBOARD ==================== -->
+        <div id="cmsPanel_dashboard" class="cms-tab-panel space-y-6">
+          
+          <!-- Key Metrics Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="cms-card p-5">
+              <span class="text-xs text-stone-400 block font-medium">Omset Penjualan Hari Ini</span>
+              <span id="dashTotalRevenue" class="text-2xl font-black text-gold-gradient mt-1 block">Rp 0</span>
+              <span class="text-[11px] text-stone-500 mt-1 block">Akumulasi pesanan kasir POS</span>
+            </div>
+
+            <div class="cms-card p-5">
+              <span class="text-xs text-stone-400 block font-medium">Pesanan Masuk Hari Ini</span>
+              <span id="dashTodayOrders" class="text-2xl font-black text-white mt-1 block">0 Pesanan</span>
+              <span class="text-[11px] text-stone-500 mt-1 block">Dari scan meja & takeaway</span>
+            </div>
+
+            <div class="cms-card p-5">
+              <span class="text-xs text-stone-400 block font-medium">Antrean Sedang Diproses</span>
+              <span id="dashActiveOrders" class="text-2xl font-black text-amber-400 mt-1 block">0 Antrean</span>
+              <span class="text-[11px] text-stone-500 mt-1 block">Perlu disiapkan barista</span>
+            </div>
+
+            <div class="cms-card p-5">
+              <span class="text-xs text-stone-400 block font-medium">Status Meja Resto</span>
+              <div id="dashTableStats" class="text-xs text-stone-300 mt-2 font-medium">
+                Memuat data meja...
+              </div>
+              <span class="text-[11px] text-stone-500 mt-1 block">Total 20 meja ber-QR Code</span>
+            </div>
+          </div>
+
+          <!-- Quick Cafe Status & Operational Control -->
+          <div class="cms-card p-5 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 border-2 border-amber-500/30">
+            <div>
+              <span class="text-[10px] font-black uppercase tracking-widest text-amber-400 block">Status Operasional Website & Cafe</span>
+              <h4 class="text-lg font-bold text-white mt-0.5">Kontrol Ketersediaan Toko di Website</h4>
+              <p class="text-xs text-stone-400 mt-1">Mengubah badge status buka/tutup yang tampil di bagian atas website pelanggan secara seketika.</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <select id="dashCafeStatusSelect" onchange="window.vikingAdmin.quickChangeCafeStatus(this.value)" class="cms-input font-bold text-xs bg-stone-900 border-amber-500/40 text-amber-300">
+                <option value="open">🟢 Buka Normal (Menerima Pesanan)</option>
+                <option value="busy">🟡 Sedang Ramai / Jam Sibuk</option>
+                <option value="closed">🔴 Tutup Sementara (Hanya Lihat Menu)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick Shortcuts & Actions -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+            <button onclick="window.vikingAdmin.switchTab('site-settings')" class="p-4 rounded-2xl bg-stone-900 hover:bg-stone-850 border border-stone-800 text-left transition-all cursor-pointer group">
+              <span class="text-2xl block mb-1 group-hover:scale-110 transition-transform">🌐</span>
+              <strong class="text-xs text-white block">Ubah Profil & Info</strong>
+              <span class="text-[10px] text-stone-400">Nama, jam, WhatsApp</span>
+            </button>
+            <button onclick="window.vikingAdmin.switchTab('menu')" class="p-4 rounded-2xl bg-stone-900 hover:bg-stone-850 border border-stone-800 text-left transition-all cursor-pointer group">
+              <span class="text-2xl block mb-1 group-hover:scale-110 transition-transform">☕</span>
+              <strong class="text-xs text-white block">Katalog Menu</strong>
+              <span id="dashMenuStats" class="text-[10px] text-stone-400">50+ menu</span>
+            </button>
+            <button onclick="window.vikingAdmin.switchTab('live-music')" class="p-4 rounded-2xl bg-stone-900 hover:bg-stone-850 border border-stone-800 text-left transition-all cursor-pointer group">
+              <span class="text-2xl block mb-1 group-hover:scale-110 transition-transform">🎸</span>
+              <strong class="text-xs text-white block">Jadwal Live Music</strong>
+              <span class="text-[10px] text-stone-400">Panggung weekend</span>
+            </button>
+            <button onclick="window.vikingAdmin.switchTab('tables')" class="p-4 rounded-2xl bg-stone-900 hover:bg-stone-850 border border-stone-800 text-left transition-all cursor-pointer group">
+              <span class="text-2xl block mb-1 group-hover:scale-110 transition-transform">🖨️</span>
+              <strong class="text-xs text-white block">Cetak QR Meja</strong>
+              <span class="text-[10px] text-stone-400">Meja 01 s/d 20</span>
+            </button>
+            <button onclick="window.vikingAdmin.switchTab('orders')" class="p-4 rounded-2xl bg-stone-900 hover:bg-stone-850 border border-stone-800 text-left transition-all cursor-pointer group col-span-2 sm:col-span-1">
+              <span class="text-2xl block mb-1 group-hover:scale-110 transition-transform">🧾</span>
+              <strong class="text-xs text-white block">Kasir POS</strong>
+              <span class="text-[10px] text-stone-400">Antrean dapur</span>
+            </button>
+          </div>
+
+          <!-- Recent Orders Preview Strip -->
+          <div class="cms-card p-5">
+            <div class="flex items-center justify-between mb-3 border-b border-stone-800 pb-3">
+              <h4 class="font-bold text-white text-sm">Pesanan Terbaru Masuk Hari Ini</h4>
+              <button onclick="window.vikingAdmin.switchTab('orders')" class="text-xs text-amber-400 hover:underline font-bold cursor-pointer">
+                Lihat Semua Pesanan →
+              </button>
+            </div>
+            <div id="dashRecentOrdersList" class="space-y-2">
+              <!-- Rendered by admin.js -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== PANEL 2: SITE CONTENT & GENERAL SETTINGS ==================== -->
+        <div id="cmsPanel_site-settings" class="cms-tab-panel hidden space-y-6">
+          <div class="flex items-center justify-between border-b border-stone-800 pb-4">
+            <div>
+              <h4 class="font-bold text-white text-base font-serif-title">Pengaturan Profil & Konten Website VIKING</h4>
+              <p class="text-xs text-stone-400">Setiap perubahan yang Anda simpan di sini akan langsung mengubah tampilan website di sisi pelanggan seketika.</p>
+            </div>
+            <button onclick="window.vikingAdmin.resetSiteSettings()" class="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-semibold cursor-pointer border border-stone-700">
+              ↺ Reset Default
+            </button>
+          </div>
+
+          <form id="cmsSiteSettingsForm" class="space-y-5">
+            
+            <!-- Cafe Identity -->
+            <div class="cms-card p-5 space-y-4">
+              <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">1. Identitas Brand & Slogan</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Nama Cafe *</label>
+                  <input type="text" id="cmsSetCafeName" required class="cms-input w-full" placeholder="VIKING" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Tagline / Slogan</label>
+                  <input type="text" id="cmsSetTagline" class="cms-input w-full" placeholder="Cita Rasa Juara, Semangat Tangguh & Kehangatan Sejati" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Deskripsi Singkat (Hero)</label>
+                <textarea id="cmsSetShortDesc" rows="2" class="cms-input w-full" placeholder="Deskripsi perkenalan cafe untuk pengunjung"></textarea>
+              </div>
+            </div>
+
+            <!-- Top Announcement Bar -->
+            <div class="cms-card p-5 space-y-4">
+              <div class="flex items-center justify-between">
+                <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">2. Pengumuman Berjalan di Header (Announcement Bar)</h5>
+                <label class="inline-flex items-center gap-2 cursor-pointer text-xs font-bold text-stone-300">
+                  <input type="checkbox" id="cmsSetShowAnnouncement" class="w-4 h-4 rounded-sm text-amber-600 focus:ring-amber-500" />
+                  <span>Aktifkan Bar Pengumuman</span>
+                </label>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Teks Pengumuman Promo / Live Music</label>
+                <input type="text" id="cmsSetAnnouncementText" class="cms-input w-full" placeholder="Teks pengumuman yang berjalan di bagian paling atas website" />
+              </div>
+            </div>
+
+            <!-- Operational Status & Hours -->
+            <div class="cms-card p-5 space-y-4">
+              <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">3. Status Toko & Jam Operasional</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Status Cafe Saat Ini</label>
+                  <select id="cmsSetStatus" class="cms-input w-full font-bold">
+                    <option value="open">🟢 Buka Normal</option>
+                    <option value="busy">🟡 Jam Sibuk / Ramai</option>
+                    <option value="closed">🔴 Tutup Sementara</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Jam Buka Weekday (Senin - Jumat)</label>
+                  <input type="text" id="cmsSetHoursWeekday" class="cms-input w-full" placeholder="08:00 - 23:00 WIB" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Jam Buka Weekend (Sabtu - Minggu)</label>
+                  <input type="text" id="cmsSetHoursWeekend" class="cms-input w-full" placeholder="07:00 - 24:00 WIB" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Suasana Latar Belakang Website</label>
+                  <select id="cmsSetThemeAmbience" class="cms-input w-full font-bold">
+                    <option value="warm">☀️ Siang Hangat & Simpel (Warm Cashmere)</option>
+                    <option value="dark">🌙 Malam Mewah & Akustik (Dark Velvet Lounge)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Address & Location -->
+            <div class="cms-card p-5 space-y-4">
+              <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">4. Alamat & Lokasi Google Maps</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Alamat Lengkap *</label>
+                  <input type="text" id="cmsSetAddress" required class="cms-input w-full" placeholder="Jl. Tidar, Pelindu, Karangrejo, Kec. Sumbersari, Kabupaten Jember, Jawa Timur 68124" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Catatan Patokan Kawasan</label>
+                  <input type="text" id="cmsSetAddressNotes" class="cms-input w-full" placeholder="Kawasan Tidar / Karangrejo, Sumbersari - Jember" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Tautan Google Maps</label>
+                <input type="url" id="cmsSetMapsUrl" class="cms-input w-full" placeholder="https://maps.google.com/?q=..." />
+              </div>
+            </div>
+
+            <!-- Contacts & Social Media -->
+            <div class="cms-card p-5 space-y-4">
+              <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">5. Kontak & Media Sosial</h5>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Nomor WhatsApp (Admin Order) *</label>
+                  <input type="text" id="cmsSetWhatsapp" required class="cms-input w-full" placeholder="6281234567890" />
+                  <span class="text-[10px] text-stone-500">Awali dengan 62 (tanpa tanda +)</span>
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Nomor Telepon Hotline</label>
+                  <input type="text" id="cmsSetPhone" class="cms-input w-full" placeholder="+62 812-3456-7890" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Akun Instagram</label>
+                  <input type="text" id="cmsSetInstagram" class="cms-input w-full" placeholder="@viking.id" />
+                </div>
+                <div>
+                  <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Akun TikTok</label>
+                  <input type="text" id="cmsSetTiktok" class="cms-input w-full" placeholder="@viking.id" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase mb-1">Email Resmi</label>
+                <input type="email" id="cmsSetEmail" class="cms-input w-full" placeholder="halo@viking.com" />
+              </div>
+            </div>
+
+            <!-- Save Action Button -->
+            <div class="pt-2">
+              <button type="submit" class="btn-luxury-gold w-full sm:w-auto px-8 py-3.5 rounded-2xl text-xs sm:text-sm font-black shadow-xl cursor-pointer flex items-center justify-center gap-2">
+                <span>💾 Simpan & Terapkan Perubahan Website</span>
+              </button>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- ==================== PANEL 3: LIVE MUSIC SCHEDULE CMS ==================== -->
+        <div id="cmsPanel_live-music" class="cms-tab-panel hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-800 pb-4">
+            <div>
+              <h4 class="font-bold text-white text-base font-serif-title">Manajemen Panggung & Jadwal Live Music</h4>
+              <p class="text-xs text-stone-400">Kelola jadwal hari, nama band penampil, jam tampil, dan deskripsi acara akhir pekan.</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="window.vikingAdmin.openAddLiveMusicModal()" class="btn-luxury-gold px-4 py-2 rounded-xl text-xs font-black shadow-md cursor-pointer flex items-center gap-1.5">
+                <span>+ Tambah Jadwal Live Music</span>
+              </button>
+              <button onclick="window.vikingAdmin.resetLiveMusicToDefault()" class="px-3 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-semibold cursor-pointer border border-stone-700">
+                ↺ Reset Default
+              </button>
+            </div>
+          </div>
+
+          <div id="cmsLiveMusicListContainer" class="space-y-4">
+            <!-- Rendered by admin.js -->
+          </div>
+        </div>
+
+        <!-- ==================== PANEL 4: PRODUCT CATALOG & PRICING CMS ==================== -->
+        <div id="cmsPanel_menu" class="cms-tab-panel hidden space-y-6">
+          
+          <!-- Fast Add Product Card -->
+          <div class="cms-card p-5 space-y-4">
+            <h4 class="font-bold text-white text-sm flex items-center gap-2">
+              <span class="text-amber-400">➕</span>
+              <span>Tambah Produk Baru ke Katalog (Kapasitas 50-500 Produk)</span>
+            </h4>
+            <form id="addNewProductForm" class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <input type="text" id="newProdName" required placeholder="Nama Produk (mis. Viking Hazelnut)" class="cms-input" />
+              <select id="newProdCategory" class="cms-input">
+                <option value="coffee">Coffee-Based</option>
+                <option value="non-coffee">Non-Coffee</option>
+                <option value="snack">Snack & Finger Food</option>
+                <option value="meals">Makanan Berat</option>
+                <option value="pastry">Bakery & Pastry</option>
+              </select>
+              <input type="number" id="newProdPrice" required placeholder="Harga (Rp) mis. 32000" class="cms-input" />
+              <input type="text" id="newProdDesc" placeholder="Deskripsi singkat sajian" class="sm:col-span-2 cms-input" />
+              <input type="text" id="newProdBadge" placeholder="Badge (mis. Best Seller / New / Rekomendasi)" class="cms-input" />
+              <input type="url" id="newProdImage" placeholder="URL Foto Unsplash (Opsional - default disiapkan)" class="sm:col-span-2 cms-input" />
+              <button type="submit" class="btn-luxury-gold py-2.5 rounded-xl text-xs font-black shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+                <span>+ Simpan ke Katalog</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Filter, Search, Export & Import Bar -->
+          <div class="cms-card p-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2 w-full md:w-auto flex-grow max-w-md">
+              <input 
+                type="text" 
+                id="cmsMenuSearchInput" 
+                oninput="window.vikingAdmin.setMenuSearch(this.value)"
+                placeholder="Cari menu di katalog..." 
+                class="cms-input w-full"
+              />
+              <select 
+                id="cmsMenuCategoryFilter"
+                onchange="window.vikingAdmin.setMenuCategoryFilter(this.value)"
+                class="cms-input font-semibold text-stone-200">
+                <option value="all">Semua Kategori</option>
+                <option value="coffee">Coffee-Based</option>
+                <option value="non-coffee">Non-Coffee</option>
+                <option value="snack">Snack</option>
+                <option value="meals">Makanan Berat</option>
+                <option value="pastry">Pastry</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-2 w-full md:w-auto justify-between md:justify-end flex-wrap">
+              <span id="cmsMenuCountDisplay" class="text-[11px] text-stone-400 font-medium"></span>
+
+              <!-- Export JSON -->
+              <button onclick="window.vikingAdmin.exportMenuJSON()" class="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold text-[11px] border border-stone-700 cursor-pointer flex items-center gap-1">
+                <span>📥 Backup JSON</span>
+              </button>
+
+              <!-- Import JSON -->
+              <label class="px-3 py-1.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 font-bold text-[11px] border border-stone-700 cursor-pointer flex items-center gap-1">
+                <span>📤 Import JSON</span>
+                <input type="file" accept=".json" onchange="window.vikingAdmin.importMenuJSON(event)" class="hidden" />
+              </label>
+
+              <!-- Reset Menu -->
+              <button onclick="window.vikingAdmin.resetMenuToDefault()" class="px-3 py-1.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 font-bold text-[11px] border border-rose-800/40 cursor-pointer">
+                Reset 50+ Menu
+              </button>
+            </div>
+          </div>
+
+          <!-- Product Table List -->
+          <div class="cms-card overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-stone-900 text-stone-400 text-[11px] uppercase tracking-wider font-bold border-b border-stone-800">
+                    <th class="py-3 px-3">Produk</th>
+                    <th class="py-3 px-3">Harga (Rp)</th>
+                    <th class="py-3 px-3">Status Stok</th>
+                    <th class="py-3 px-3 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="menuManagerTableBody">
+                  <!-- Rendered by admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ==================== PANEL 5: TABLES & QR CODE STUDIO ==================== -->
+        <div id="cmsPanel_tables" class="cms-tab-panel hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 cms-card p-5">
+            <div>
+              <h4 class="font-bold text-white text-base font-serif-title">Studio QR Code & Denah Meja (Meja 01 s/d 20)</h4>
+              <p class="text-xs text-stone-400 mt-0.5">Ubah status ketersediaan meja atau cetak akrilik kode QR untuk ditaruh di atas meja fisik restoran.</p>
+            </div>
+            <button onclick="window.vikingAdmin.printAllTablesBatch()" class="btn-luxury-gold px-5 py-2.5 rounded-xl text-xs font-black shadow-lg flex items-center gap-2 cursor-pointer flex-shrink-0">
+              <span>🖨️ Batch Cetak Semua 20 Meja QR (Format Siap Cetak A4)</span>
+            </button>
+          </div>
+
+          <div id="tablesAdminGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Rendered by admin.js -->
+          </div>
+        </div>
+
+        <!-- ==================== PANEL 6: ORDERS & POS CASHIER ==================== -->
+        <div id="cmsPanel_orders" class="cms-tab-panel hidden space-y-6">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-800 pb-3">
+            <div>
+              <h4 class="font-bold text-white text-base font-serif-title">Monitor Antrean Dapur & POS Kasir</h4>
+              <p class="text-xs text-stone-400">Pesanan dari scan meja pelanggan tersinkronisasi otomatis seketika.</p>
+            </div>
+
+            <!-- Status Filter Chips -->
+            <div class="flex items-center gap-1.5 overflow-x-auto text-xs">
+              <button onclick="window.vikingAdmin.setOrdersFilter('all')" class="px-3 py-1.5 rounded-xl bg-stone-800 text-white font-bold hover:bg-stone-700 cursor-pointer">Semua</button>
+              <button onclick="window.vikingAdmin.setOrdersFilter('pending')" class="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30 hover:bg-amber-500/30 cursor-pointer">Menunggu</button>
+              <button onclick="window.vikingAdmin.setOrdersFilter('preparing')" class="px-3 py-1.5 rounded-xl bg-blue-500/20 text-blue-300 font-bold border border-blue-500/30 hover:bg-blue-500/30 cursor-pointer">Dimasak</button>
+              <button onclick="window.vikingAdmin.setOrdersFilter('delivered')" class="px-3 py-1.5 rounded-xl bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30 hover:bg-purple-500/30 cursor-pointer">Diantar</button>
+              <button onclick="window.vikingAdmin.setOrdersFilter('completed')" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30 hover:bg-emerald-500/30 cursor-pointer">Selesai</button>
+            </div>
+          </div>
+
+          <div id="ordersListContainer" class="space-y-3">
+            <!-- Rendered by admin.js -->
+          </div>
+        </div>
+
+        <!-- ==================== PANEL 7: SECURITY & PIN MANAGEMENT ==================== -->
+        <div id="cmsPanel_security" class="cms-tab-panel hidden space-y-6">
+          <div class="border-b border-stone-800 pb-4">
+            <h4 class="font-bold text-white text-base font-serif-title">Keamanan Akses & Pemeliharaan Data</h4>
+            <p class="text-xs text-stone-400">Atur PIN sandi login admin cafe dan pemeliharaan basis data lokal website.</p>
+          </div>
+
+          <!-- Change PIN Form -->
+          <div class="cms-card p-6 max-w-xl space-y-4">
+            <div class="flex items-center justify-between">
+              <h5 class="text-xs font-black uppercase tracking-widest text-amber-400">Ubah PIN Keamanan Admin</h5>
+              <span class="text-[11px] text-stone-400">PIN Aktif: <strong id="cmsCurrentPinHint" class="text-amber-300">1234</strong></span>
+            </div>
+
+            <form id="cmsChangePinForm" class="space-y-3 text-xs">
+              <div>
+                <label class="block font-bold text-stone-300 uppercase mb-1">PIN Saat Ini *</label>
+                <input type="password" id="cmsOldPin" required placeholder="Masukkan PIN saat ini (default: 1234)" class="cms-input w-full" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block font-bold text-stone-300 uppercase mb-1">PIN Baru (Min 4 Karakter) *</label>
+                  <input type="password" id="cmsNewPin" required placeholder="PIN baru" class="cms-input w-full" />
+                </div>
+                <div>
+                  <label class="block font-bold text-stone-300 uppercase mb-1">Konfirmasi PIN Baru *</label>
+                  <input type="password" id="cmsConfirmNewPin" required placeholder="Ulangi PIN baru" class="cms-input w-full" />
+                </div>
+              </div>
+              <button type="submit" class="btn-luxury-gold px-6 py-2.5 rounded-xl font-black text-xs shadow-md cursor-pointer">
+                Simpan PIN Baru
+              </button>
+            </form>
+          </div>
+
+          <!-- Database Maintenance -->
+          <div class="cms-card p-6 max-w-xl space-y-4">
+            <h5 class="text-xs font-black uppercase tracking-widest text-rose-400">Tindakan Pemeliharaan Resto</h5>
+            
+            <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+              <div>
+                <strong class="text-white text-xs block">Bersihkan Riwayat Pesanan</strong>
+                <span class="text-[11px] text-stone-400">Hapus semua antrean pesanan kasir hari ini.</span>
+              </div>
+              <button onclick="window.vikingAdmin.clearAllOrders()" class="px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs font-bold border border-stone-700 cursor-pointer">
+                Bersihkan Pesanan
+              </button>
+            </div>
+
+            <div class="flex items-center justify-between pt-3 border-t border-stone-800">
+              <div>
+                <strong class="text-rose-400 text-xs block">Reset Seluruh Data Website</strong>
+                <span class="text-[11px] text-stone-400">Kembalikan semua menu, jadwal, denah meja & info ke setelan awal.</span>
+              </div>
+              <button onclick="window.vikingAdmin.resetAllWebsiteData()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black cursor-pointer shadow-sm">
+                Reset Semua Data
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: ADMIN LOGIN PIN PROMPT -->
+  <div id="adminLoginModal" onclick="if(event.target === this) window.vikingAdmin.closeLoginModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="login-box bg-[#150d09] text-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border-2 border-amber-500/40 transform scale-95 transition-transform duration-300 gold-glow">
+      <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-stone-950 font-black flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg">
+        👑
+      </div>
+      <h3 class="font-serif-title font-bold text-2xl text-white">Login CMS Admin</h3>
+      <p class="text-xs text-stone-400 mt-1 mb-6">
+        Akses khusus pengelola cafe VIKING untuk mengubah konten website, katalog 50+ menu, jadwal live music, dan POS kasir.
+      </p>
+
+      <form onsubmit="window.vikingAdmin.submitLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-left text-[11px] font-bold text-amber-300 uppercase tracking-wider mb-1.5">
+            Masukkan PIN Keamanan Admin
+          </label>
+          <input 
+            type="password" 
+            id="adminPinInput" 
+            required
+            maxlength="20"
+            placeholder="Ketik PIN (Default: 1234)" 
+            class="cms-input w-full text-center text-lg tracking-[0.3em] font-mono font-bold"
+          />
+          <span class="text-[10px] text-stone-500 block mt-1 text-left">PIN Bawaan Pabrik: <strong>1234</strong> (dapat diganti di panel)</span>
+        </div>
+
+        <div id="adminLoginErrorMsg" class="hidden text-xs text-rose-400 bg-rose-950/40 border border-rose-800/50 p-2.5 rounded-xl font-semibold"></div>
+
+        <button type="submit" class="btn-luxury-gold w-full py-3.5 rounded-2xl text-xs font-black shadow-xl cursor-pointer">
+          Masuk ke Panel CMS →
+        </button>
+      </form>
+
+      <button onclick="window.vikingAdmin.closeLoginModal()" class="mt-4 text-xs text-stone-400 hover:text-white font-medium cursor-pointer">
+        Batal & Kembali ke Website
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT PRODUCT MENU -->
+  <div id="editProductModal" onclick="if(event.target === this) window.vikingAdmin.closeEditProductModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="modal-box bg-[#150d09] text-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-2 border-amber-500/40 transform scale-95 transition-transform duration-300">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3 mb-4">
+        <h4 class="font-bold text-lg font-serif-title text-white">✏️ Edit Produk Menu</h4>
+        <button onclick="window.vikingAdmin.closeEditProductModal()" class="text-stone-400 hover:text-white text-lg cursor-pointer">✕</button>
+      </div>
+
+      <form id="editProductForm" class="space-y-3.5 text-xs">
+        <input type="hidden" id="editProdId" />
+
+        <div>
+          <label class="block font-bold text-stone-300 uppercase mb-1">Nama Produk *</label>
+          <input type="text" id="editProdName" required class="cms-input w-full" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Kategori *</label>
+            <select id="editProdCategory" class="cms-input w-full">
+              <option value="coffee">Coffee-Based</option>
+              <option value="non-coffee">Non-Coffee</option>
+              <option value="snack">Snack & Finger Food</option>
+              <option value="meals">Makanan Berat</option>
+              <option value="pastry">Bakery & Pastry</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Harga (Rp) *</label>
+            <input type="number" id="editProdPrice" required class="cms-input w-full" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-300 uppercase mb-1">Deskripsi Sajian</label>
+          <textarea id="editProdDesc" rows="2" class="cms-input w-full"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Badge (Opsional)</label>
+            <input type="text" id="editProdBadge" placeholder="mis. Best Seller / New" class="cms-input w-full" />
+          </div>
+          <div class="flex items-center pt-5">
+            <label class="inline-flex items-center gap-2 cursor-pointer font-bold text-stone-200">
+              <input type="checkbox" id="editProdSoldOut" class="w-4 h-4 rounded-sm text-rose-600 focus:ring-rose-500" />
+              <span>Tandai Habis (Sold Out)</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-300 uppercase mb-1">URL Foto Produk</label>
+          <input type="url" id="editProdImage" placeholder="https://images.unsplash.com/..." class="cms-input w-full" />
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2">
+          <button type="button" onclick="window.vikingAdmin.closeEditProductModal()" class="px-4 py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold cursor-pointer">
+            Batal
+          </button>
+          <button type="submit" class="btn-luxury-gold px-6 py-2.5 rounded-xl font-black shadow-md cursor-pointer">
+            Simpan Perubahan
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT / ADD LIVE MUSIC EVENT -->
+  <div id="editLiveMusicModal" onclick="if(event.target === this) window.vikingAdmin.closeLiveMusicModal()" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="modal-box bg-[#150d09] text-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border-2 border-amber-500/40 transform scale-95 transition-transform duration-300">
+      <div class="flex items-center justify-between border-b border-stone-800 pb-3 mb-4">
+        <h4 id="lmModalTitle" class="font-bold text-lg font-serif-title text-white">🎸 Kelola Jadwal Live Music</h4>
+        <button onclick="window.vikingAdmin.closeLiveMusicModal()" class="text-stone-400 hover:text-white text-lg cursor-pointer">✕</button>
+      </div>
+
+      <form id="editLiveMusicForm" class="space-y-3.5 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Hari & Sesi *</label>
+            <input type="text" id="lmInputDay" required placeholder="mis. Jumat Malam" class="cms-input w-full" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Badge Highlight</label>
+            <input type="text" id="lmInputBadge" placeholder="mis. Weekend Kickoff / Paling Ramai" class="cms-input w-full" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-300 uppercase mb-1">Judul Event / Nama Show *</label>
+          <input type="text" id="lmInputTitle" required placeholder="mis. Friday Jazz & Soul Night" class="cms-input w-full" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Nama Band / Penampil *</label>
+            <input type="text" id="lmInputPerformer" required placeholder="mis. The Viking Jazz Project" class="cms-input w-full" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Jam Tampil *</label>
+            <input type="text" id="lmInputTime" required placeholder="19:30 - 22:30 WIB" class="cms-input w-full" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Genre Musik</label>
+            <input type="text" id="lmInputGenre" placeholder="Smooth Jazz, Neo-Soul & R&B" class="cms-input w-full" />
+          </div>
+          <div>
+            <label class="block font-bold text-stone-300 uppercase mb-1">Lokasi Panggung</label>
+            <input type="text" id="lmInputLocation" placeholder="Panggung Outdoor Garden" class="cms-input w-full" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-stone-300 uppercase mb-1">Deskripsi Suasana Acara</label>
+          <textarea id="lmInputDesc" rows="2" placeholder="Ceritakan suasana alunan musik untuk memikat pengunjung" class="cms-input w-full"></textarea>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-2">
+          <button type="button" onclick="window.vikingAdmin.closeLiveMusicModal()" class="px-4 py-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 text-stone-300 font-bold cursor-pointer">
+            Batal
+          </button>
+          <button type="submit" class="btn-luxury-gold px-6 py-2.5 rounded-xl font-black shadow-md cursor-pointer">
+            Simpan Jadwal Live Music
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. TABLE QR MODAL VIEW & PRINT PREVIEW -->
+  <div id="tableQRViewModal" onclick="if(event.target === this) window.vikingAdmin.closeTableQRModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl border border-stone-200">
+      
+      <span class="text-[10px] font-bold text-amber-900 uppercase tracking-widest block">Akrilik Meja Resto</span>
+      <h3 id="qrModalTableName" class="font-serif-title font-black text-2xl text-stone-900 mt-1">Meja XX</h3>
+      <p id="qrModalTableArea" class="text-xs text-stone-500 mb-4">Area Meja</p>
+
+      <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200/80 inline-block mb-3">
+        <img id="qrModalImage" src="" alt="QR Code Meja" class="w-48 h-48 rounded-xl mx-auto" />
+      </div>
+
+      <p class="text-[11px] text-stone-500 break-all mb-4 px-2" id="qrModalLinkText"></p>
+
+      <div class="space-y-2">
+        <button onclick="window.vikingAdmin.printCurrentTableQR()" class="w-full py-3 rounded-xl bg-amber-900 hover:bg-amber-950 text-white font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md">
+          <span>🖨️ Cetak Kartu Meja Ini</span>
+        </button>
+        <button onclick="window.vikingAdmin.closeTableQRModal()" class="w-full py-2 rounded-xl text-stone-500 hover:text-stone-800 text-xs font-semibold cursor-pointer">
+          Tutup
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6. DIRECT POS ORDER SUCCESS POPUP -->
+  <div id="orderDirectSuccessModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border border-stone-200">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+      <h3 class="font-serif-title font-bold text-2xl text-stone-900 mb-1">Pesanan Berhasil Dikirim!</h3>
+      <p class="text-xs text-stone-500 mb-4">Pesanan Anda telah masuk ke sistem dapur barista VIKING.</p>
+
+      <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 text-left text-xs space-y-1.5 mb-6">
+        <div><strong>Order ID:</strong> <span id="successOrderId" class="font-bold text-amber-900">-</span></div>
+        <div><strong>Tujuan:</strong> <span id="successOrderTable" class="font-bold text-stone-800">-</span></div>
+        <div><strong>Total:</strong> <span id="successOrderTotal" class="font-bold text-stone-800">-</span></div>
+      </div>
+
+      <p class="text-xs text-stone-600 mb-6">Silakan tunggu dengan santai di meja Anda, barista kami sedang meracik pesanan terbaik untuk Anda.</p>
+      
+      <button onclick="document.getElementById('orderDirectSuccessModal').classList.add('hidden')" class="w-full py-3 rounded-2xl bg-amber-900 text-white font-bold text-xs cursor-pointer shadow-md">
+        Baik, Mengerti
+      </button>
+    </div>
+  </div>
+
+  <!-- 7. RESERVATION SUCCESS MODAL -->
+  <div id="reservationSuccessModal" onclick="if(event.target === this) window.cafeReservation.closeModal()" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
+    <div class="modal-content-box bg-white rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border border-stone-200 transform scale-95 transition-transform duration-300">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+      <h3 class="font-serif-title font-bold text-2xl text-stone-900 mb-1">Reservasi Disiapkan!</h3>
+      <p class="text-xs text-stone-500 mb-6">Rincian reservasi Anda telah kami rangkum dengan rapi.</p>
+      <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200/80 text-left text-xs space-y-2 mb-6">
+        <div><strong class="text-stone-700">Nama:</strong> <span id="modalResName" class="text-stone-900 font-semibold">-</span></div>
+        <div><strong class="text-stone-700">Waktu:</strong> <span id="modalResDatetime" class="text-stone-900 font-semibold">-</span></div>
+        <div><strong class="text-stone-700">Tamu & Area:</strong> <span id="modalResGuests" class="text-stone-900 font-semibold">-</span></div>
+      </div>
+      <div class="space-y-3">
+        <a id="modalResWaBtn" href="#" target="_blank" class="w-full py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-700/20">
+          <span>Kirim Konfirmasi ke WhatsApp</span>
+          <span>→</span>
+        </a>
+        <button onclick="window.cafeReservation.closeModal()" class="w-full py-2.5 rounded-xl text-stone-500 hover:text-stone-800 text-xs font-semibold cursor-pointer">
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. GALLERY LIGHTBOX MODAL -->
+  <div id="lightboxModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeLightbox()">
+    <div class="relative max-w-4xl w-full" onclick="event.stopPropagation()">
+      <button onclick="closeLightbox()" class="absolute -top-12 right-0 text-white text-2xl font-bold hover:text-amber-300 cursor-pointer" aria-label="Tutup">✕</button>
+      <img id="lightboxImg" src="" alt="Gallery Preview" class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl" />
+      <div class="mt-4 text-center text-white">
+        <h4 id="lightboxTitle" class="font-bold text-lg"></h4>
+        <p id="lightboxCaption" class="text-stone-300 text-xs mt-1"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT ARCHITECTURE -->
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/orders.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/reservation.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
